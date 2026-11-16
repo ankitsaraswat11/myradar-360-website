@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Update the domain below before launch (see README)
+Sitemap: https://www.example.com/sitemap.xml
