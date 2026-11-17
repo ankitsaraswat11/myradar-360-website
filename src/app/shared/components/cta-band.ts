@@ -22,8 +22,8 @@ import { RevealDirective } from '../directives/reveal.directive';
             <p>{{ text() }}</p>
           </div>
           <div class="actions">
-            <a class="btn btn-primary" routerLink="/contact">Request a demo <mr-icon name="arrow-right" [size]="18" /></a>
-            <a class="btn btn-ghost-light" routerLink="/features">Explore features</a>
+            <a class="btn btn-primary" routerLink="/contact">Get started <mr-icon name="arrow-right" [size]="18" /></a>
+            <a class="btn btn-ghost-light" routerLink="/features">Explore services</a>
           </div>
         </div>
       </div>

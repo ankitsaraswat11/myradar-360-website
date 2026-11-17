@@ -13,7 +13,7 @@ import { SITE } from '../core/site.config';
   imports: [IconComponent, PageHeroComponent, SectionHeaderComponent, ContactFormComponent, FaqComponent, RevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <mr-page-hero eyebrow="Contact us" intro="Want to see your X handle as a ticket desk? Send a message — the right person will reply.">
+    <mr-page-hero eyebrow="Contact us" intro="Want a demo, or have a question? Send a message — the right person will reply.">
       We would love to <span class="serif">hear from you.</span>
     </mr-page-hero>
 

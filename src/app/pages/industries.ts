@@ -12,8 +12,8 @@ const HUES = [168, 250, 190, 270, 205, 150];
   imports: [IconComponent, PageHeroComponent, CtaBandComponent, RevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <mr-page-hero eyebrow="Who it’s for" intro="District offices, municipal corporations, police, utilities, health departments — and brands. Anyone whose public reaches out on X.">
-      For every office citizens <span class="serif">reach on X.</span>
+    <mr-page-hero eyebrow="Who it’s for" intro="Brands, marketing teams, startups, agencies, government offices and media companies.">
+      Built for teams that <span class="serif">need to listen.</span>
     </mr-page-hero>
 
     <section class="section">
@@ -42,7 +42,7 @@ const HUES = [168, 250, 190, 270, 205, 150];
       </div>
     </section>
 
-    <mr-cta-band title="Not sure it fits your office?" text="Tell us how complaints reach you today. We’ll show you how it works on your handle." />
+    <mr-cta-band title="Not sure it fits your team?" text="Tell us what you want to track. We’ll show you how it works." />
   `,
   styles: `
     .chips-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: clamp(32px, 4vw, 48px); }

@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, NgZone, afterNextRender, inject, signal } from '@angular/core';
 import { IconComponent } from './icon';
-import { SOURCES } from '../../content/content';
+import { SERVICES, Service } from '../../content/content';
+import { ServiceIconComponent } from './service-icon';
 
-interface SourceNode { icon: string; label: string; media: boolean; x: number; y: number; path: string; }
+interface SourceNode { s: Service; label: string; media: boolean; x: number; y: number; path: string; }
 
 const C = 300; // svg centre (viewBox 600 × 600)
 const R = 232; // node distance from centre
@@ -16,8 +17,6 @@ function beam(x: number, y: number): string {
   return `M${x.toFixed(1)} ${y.toFixed(1)} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${C} ${C}`;
 }
 
-/** Short labels for the ring (full names are listed in the sources section). */
-const SHORT: Record<string, string> = { 'X (Twitter)': 'X', 'News (web)': 'News', 'Newspapers (e-paper)': 'E-papers', Television: 'TV' };
 
 /**
  * Hero visual: public sources around the edge, data travelling inward along
@@ -27,7 +26,7 @@ const SHORT: Record<string, string> = { 'X (Twitter)': 'X', 'News (web)': 'News'
  */
 @Component({
   selector: 'mr-hero-visual',
-  imports: [IconComponent],
+  imports: [IconComponent, ServiceIconComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="hv" [class.paused]="paused()" role="img"
@@ -75,7 +74,7 @@ const SHORT: Record<string, string> = { 'X (Twitter)': 'X', 'News (web)': 'News'
 
         @for (n of nodes; track n.label; let i = $index) {
           <span class="node" [class.on]="active() === i" [class.media]="n.media" [style.left.%]="n.x / 6" [style.top.%]="n.y / 6" (mouseenter)="hover(i)">
-            <span class="n-ic"><mr-icon [name]="n.icon" [size]="20" /></span>
+            <span class="n-ic"><mr-service-icon [service]="n.s" [size]="30" [solid]="active() === i" /></span>
             <span class="n-lb">{{ n.label }}</span>
           </span>
         }
@@ -133,12 +132,9 @@ const SHORT: Record<string, string> = { 'X (Twitter)': 'X', 'News (web)': 'News'
     .node { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 7px; padding: 5px 11px 5px 5px; border-radius: 999px;
       background: var(--surface-glass); border: 1px solid var(--border); box-shadow: var(--shadow); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       color: var(--fg); font-size: .8rem; font-weight: 700; white-space: nowrap; transition: border-color .35s, box-shadow .35s, transform .45s var(--ease); }
-    .n-ic { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; color: var(--accent-ink); background: var(--accent-soft); transition: background-color .35s, color .35s; }
+    .n-ic { width: 30px; height: 30px; display: grid; place-items: center; }
     .node.on { border-color: color-mix(in srgb, var(--accent) 70%, transparent); box-shadow: var(--shadow-lg), 0 0 0 4px var(--accent-soft); transform: translate(-50%, -50%) scale(1.06); }
-    .node.on .n-ic { background: var(--accent); color: #04201b; }
-    .node.media .n-ic { color: var(--violet-ink); background: var(--violet-soft); }
     .node.media.on { border-color: color-mix(in srgb, var(--violet) 70%, transparent); box-shadow: var(--shadow-lg), 0 0 0 4px var(--violet-soft); }
-    .node.media.on .n-ic { background: var(--violet); color: #fff; }
 
     .card { position: absolute; display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--border);
       box-shadow: var(--shadow-lg); animation: mr-float 6s ease-in-out infinite; }
@@ -178,7 +174,7 @@ const SHORT: Record<string, string> = { 'X (Twitter)': 'X', 'News (web)': 'News'
     }
     @container (max-width: 439px) {
       .n-ic { width: 26px; height: 26px; }
-      .n-ic mr-icon { transform: scale(.85); }
+      .n-ic mr-service-icon { transform: scale(.87); }
       .c1 { top: -17%; right: -2%; }
       .c2 { bottom: -17%; left: -2%; }
       .c3 { display: none; }
@@ -189,10 +185,10 @@ const SHORT: Record<string, string> = { 'X (Twitter)': 'X', 'News (web)': 'News'
   `,
 })
 export class HeroVisualComponent {
-  readonly nodes: SourceNode[] = SOURCES.map((s, i) => {
-    const a = ((-90 + (i * 360) / SOURCES.length) * Math.PI) / 180;
+  readonly nodes: SourceNode[] = SERVICES.map((s, i) => {
+    const a = ((-90 + (i * 360) / SERVICES.length) * Math.PI) / 180;
     const x = C + R * Math.cos(a), y = C + R * Math.sin(a);
-    return { icon: s.icon, label: SHORT[s.name] ?? s.name, media: s.group === 'media', x, y, path: beam(x, y) };
+    return { s, label: s.short, media: s.group === 'media', x, y, path: beam(x, y) };
   });
   readonly active = signal(0);
   readonly paused = signal(false);

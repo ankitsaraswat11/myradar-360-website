@@ -38,7 +38,7 @@ import { IconComponent } from './icon';
         </div>
         <div class="field">
           <label [for]="id + '-message'">How can we help? <span aria-hidden="true">*</span></label>
-          <textarea [id]="id + '-message'" rows="5" formControlName="message" maxlength="1500" [attr.aria-invalid]="bad('message')" [attr.aria-describedby]="bad('message') ? id + '-message-err' : null" placeholder="Tell us your X handle and how complaints reach your office today."></textarea>
+          <textarea [id]="id + '-message'" rows="5" formControlName="message" maxlength="1500" [attr.aria-invalid]="bad('message')" [attr.aria-describedby]="bad('message') ? id + '-message-err' : null" placeholder="Tell us your brand, keywords and the platforms you want to track."></textarea>
           @if (bad('message')) { <span class="err" [id]="id + '-message-err'">Please write a short message (at least 10 characters).</span> }
         </div>
         @if (status() === 'error') { <p class="err" role="alert">Something went wrong while sending your message. Please try again or email {{ site.contact.email }}.</p> }

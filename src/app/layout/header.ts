@@ -30,7 +30,7 @@ import { ThemeToggleComponent } from '../shared/components/theme-toggle';
 
         <div class="tools">
           <mr-theme-toggle />
-          <a class="btn btn-primary btn-sm cta" routerLink="/contact">Request a demo <mr-icon name="arrow-right" [size]="16" /></a>
+          <a class="btn btn-primary btn-sm cta" routerLink="/contact">Get started <mr-icon name="arrow-right" [size]="16" /></a>
           <button #burger class="burger" type="button" (click)="open() ? close(true) : open.set(true)" [attr.aria-expanded]="open()"
                   aria-controls="mobile-nav" [attr.aria-label]="open() ? 'Close menu' : 'Open menu'">
             <span></span><span></span><span></span>
@@ -48,7 +48,7 @@ import { ThemeToggleComponent } from '../shared/components/theme-toggle';
         </div>
         <div class="m-foot">
           <mr-theme-toggle [showLabel]="true" />
-          <a class="btn btn-primary" routerLink="/contact">Request a demo <mr-icon name="arrow-right" [size]="18" /></a>
+          <a class="btn btn-primary" routerLink="/contact">Get started <mr-icon name="arrow-right" [size]="18" /></a>
         </div>
       </nav>
     </header>
@@ -66,7 +66,8 @@ import { ThemeToggleComponent } from '../shared/components/theme-toggle';
     .bar { height: var(--header-h); display: flex; align-items: center; gap: 24px; padding: 0 clamp(12px, 1.6vw, 22px); }
     .brand { flex-shrink: 0; min-width: 0; border-radius: 12px; }
     .nav { display: flex; gap: 2px; margin-left: auto; }
-    .nav a { position: relative; padding: 10px 14px; border-radius: 999px; color: var(--fg-2); font-weight: 650; font-size: .93rem; transition: color .2s, background-color .2s; }
+    .nav a { position: relative; padding: 10px 14px; border-radius: 999px; color: var(--fg-2); font-weight: 650; font-size: .93rem; white-space: nowrap; transition: color .2s, background-color .2s; }
+    @media (max-width: 1199px) { .bar { gap: 14px; } .nav a { padding: 10px 9px; font-size: .9rem; } .nav a::after { left: 9px; right: 9px; } }
     .nav a::after { content: ''; position: absolute; left: 14px; right: 14px; bottom: 5px; height: 2px; border-radius: 2px; background: var(--accent);
       transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease); }
     .nav a:hover { color: var(--fg); }

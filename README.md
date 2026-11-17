@@ -42,14 +42,15 @@ src/app/
 ├── core/          site.config.ts (settings), seo.service.ts (titles/meta/canonical), contact.service.ts, theme.service.ts (light/dark)
 ├── content/       content.ts — all website copy (features, industries, steps, FAQ…) in one place
 ├── layout/        header (floating bar, mobile menu, theme toggle), footer
-├── pages/         home, features, industries, about, contact, not-found
+├── pages/         home, features (Services page, /features), x-messaging, industries, about, contact, not-found
 └── shared/
-    ├── components/  logo, icon, theme-toggle, hero-visual (radar hub), insight-panel (sample product views),
+    ├── components/  logo, icon, service-icon (platform logo tiles), services-grid (10 services), integrations,
+    │                x-messaging-teaser, theme-toggle, hero-visual (radar hub), insight-panel (sample product views),
     │                feature-showcase, steps-timeline, industry-carousel, spot, section-header, page-hero,
     │                cta-band, contact-form, faq
     ├── interaction/ swipe.ts — shared pointer swipe/drag + autoplay controller
     ├── directives/  reveal (scroll fade-in), count (count-up for real values) — both respect reduced motion
-    └── icons/       local icon set (Lucide geometry, ISC licence)
+    └── icons/       local icon set (Lucide geometry, ISC licence); brands.ts — platform logos (Simple Icons, CC0)
 src/styles.scss    design tokens (light / dark / inverse), typography, layout, buttons, surfaces, motion
 public/            favicon.svg, og-image.png, robots.txt, sitemap.xml
 ```
@@ -58,7 +59,9 @@ To change wording, edit `src/app/content/content.ts` — pages render from it.
 
 ## Design
 
-- **Story:** Citizen Support on X. Citizens tag a government office or send it a DM; MyRadar 360 turns each message into a ticket with an owner, a deadline and a reply on X. Monitoring across ten sources is the supporting capability.
+- **Story:** the 10 core services come first — X, YouTube, Instagram, Facebook, Reddit, LinkedIn, news websites, newspapers (e-paper), TV news and news on X — with alerts, sentiment and reports. **X Messaging** (complaints on X → tracked tickets) is a separate add-on service with its own page, `/x-messaging`.
+- **Homepage order:** Hero → value → 10 core services → integrations → X Messaging → how it works (Connect → Manage → Track) → why MyRadar 360 → final CTA.
+- **Platform logos:** from Simple Icons (CC0). LinkedIn's logo is not in that set, so LinkedIn uses a neutral briefcase icon. Use of brand logos follows each platform's brand guidelines; check them before launch.
 - **Logo:** `public/brand/logo-mark.png` (target mark) and `public/brand/logo-full.png` (full logo). The header wordmark “MY RADAR 360®” is set in text so it stays sharp in light and dark themes. Favicons: `public/favicon.png`, `public/apple-touch-icon.png`, `public/brand/icon-*.png`. Social preview: `public/og-image.png`.
 - **Colours:** taken from the logo — green/teal → blue → purple — as CSS tokens in `src/styles.scss` for both themes.
 - **Visuals:** hand-built HTML/SVG — the hero ticket flow, the animated “how it works” diagram, the 7-step water-complaint walkthrough and the six product panels. All tickets, handles and figures in them are labelled *Sample*.

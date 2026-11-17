@@ -6,6 +6,14 @@ A presentation-layer redesign. Routes, page copy (`content/content.ts`), the con
 
 Interaction quality and motion language were modelled on the Inbox Media reference source (token-driven theming, a pre-paint theme script, IntersectionObserver reveals, a pointer-drag carousel, flowing SVG beams around a hub). Its code, colours, copy and branding were **not** reused. Every visual here is original to MyRadar 360.
 
+## Restructure (services first)
+
+- The **10 core services** are now the main story. They live in `SERVICES` in `content.ts` (id, name, short label, group, brand logo key, colour, one-line text, short detail).
+- **Home** follows the brief: Hero (Explore Services → `#services`, Get Started → `/contact`) → value → services grid (filter: all / social / news & TV) → integrations → X Messaging card → 3-step timeline → why → CTA.
+- **/features** is now the Services page: sticky rail of the 10 services, one card per service (anchors `#x`, `#youtube` … `#news-on-x`), tools included with every service, supported platforms, X Messaging card.
+- **/x-messaging** holds all the ticketing content that used to be on Home and Features: problem, three entry points, flow diagram, 13 languages, the 7-step walkthrough, the scroll-driven feature showcase, feature details (anchors `#tickets` … `#rating`) and guardrails.
+- Nothing was removed: every X Messaging feature, guardrail, language and SLA detail is on the new page.
+
 ## Design system — `src/styles.scss`
 
 The stylesheet was rewritten as a single token layer. Every colour is a CSS custom property keyed on `data-theme` on `<html>`.
@@ -34,6 +42,10 @@ There are three scopes: light (default tokens), `[data-theme='dark']`, and `.inv
 - **Hero:** six source nodes with data travelling inward along curved beams. The core view pulses, an orbit and radar sweep rotate, and floating insight cards are labelled "Sample view". It pauses off-screen, and cards adapt with container queries.
 - **Steps timeline:** a signal line fills with scroll progress and lights each step.
 - Only transform/opacity are animated. Under `prefers-reduced-motion: reduce`, animation is removed, autoplay is off and everything shows in its final state.
+
+## Scroll-driven sections (laptop and desktop)
+
+On screens at least 960px wide and 680px tall, the homepage feature list (01–06) and the water-complaint walkthrough (1–7) are scroll-driven: the section pins below the header and each scroll step moves to the next item, then the page continues. Clicking an item, arrow keys and swipes scroll the page to that item. Logic: `shared/interaction/scroll-steps.ts` (sticky pin + a spacer for the scroll length). Phones and short screens keep swipe + autoplay.
 
 ## Swipe / drag
 

@@ -3,7 +3,7 @@ import { STEPS } from '../../content/content';
 import { IconComponent } from './icon';
 
 /**
- * "How it works" as a connected journey: a signal line runs through the four steps and
+ * "How it works" as a connected journey: a signal line runs through the three steps and
  * fills as the section scrolls past, lighting each step when the signal reaches it.
  * Horizontal on desktop, vertical on phones. Reduced motion: shown complete.
  */
@@ -25,8 +25,8 @@ import { IconComponent } from './icon';
     </ol>
   `,
   styles: `
-    .tl { --p: 0; position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); }
-    .rail { position: absolute; top: 31px; left: 12.5%; right: 12.5%; height: 2px; background: var(--border-strong); border-radius: 2px; }
+    .tl { --p: 0; position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); }
+    .rail { position: absolute; top: 31px; left: 16.67%; right: 16.67%; height: 2px; background: var(--border-strong); border-radius: 2px; }
     .fill { position: absolute; inset: 0; background: linear-gradient(90deg, var(--accent), var(--violet)); transform-origin: left; transform: scaleX(var(--p)); border-radius: inherit; }
     .head { position: absolute; top: 50%; left: calc(var(--p) * 100%); width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 6px var(--accent-soft), 0 0 22px var(--accent); }
     .st { position: relative; display: grid; gap: 10px; justify-items: center; text-align: center; padding: 0 6px; }

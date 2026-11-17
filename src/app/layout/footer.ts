@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LogoComponent } from '../shared/components/logo';
 import { IconComponent } from '../shared/components/icon';
-import { FEATURES, INDUSTRIES } from '../content/content';
+import { INDUSTRIES, SERVICES } from '../content/content';
 import { SITE } from '../core/site.config';
 
 @Component({
@@ -18,19 +18,20 @@ import { SITE } from '../core/site.config';
       <div class="container">
         <div class="statement">
           <p class="big">{{ site.tagline }}</p>
-          <a class="btn btn-primary" routerLink="/contact">Request a demo <mr-icon name="arrow-right" [size]="18" /></a>
+          <a class="btn btn-primary" routerLink="/contact">Get started <mr-icon name="arrow-right" [size]="18" /></a>
         </div>
         <div class="top">
           <div class="about">
             <mr-logo />
-            <p>Every complaint on X becomes a ticket — with an owner, a deadline and a reply.</p>
+            <p>Track social media, news and TV in one place — with alerts, sentiment and simple reports.</p>
             <a class="mail" [href]="'mailto:' + site.contact.email"><mr-icon name="mail" [size]="18" />{{ site.contact.email }}</a>
             <address><mr-icon name="map-pin" [size]="18" /><span>@for (l of site.contact.addressLines; track l; let last = $last) { {{ l }}@if (!last) {, } }</span></address>
             <p class="by">A product of <a [href]="site.company.url" target="_blank" rel="noopener">{{ site.company.name }}<span class="sr-only"> (opens in a new tab)</span></a></p>
           </div>
-          <nav aria-label="Product">
-            <h2>Product</h2>
-            @for (f of features; track f.id) { <a routerLink="/features" [fragment]="f.id">{{ f.title }}</a> }
+          <nav aria-label="Services">
+            <h2>Services</h2>
+            @for (s of services; track s.id) { <a routerLink="/features" [fragment]="s.id">{{ s.name }}</a> }
+            <a class="xm" routerLink="/x-messaging">X Messaging <span>Add-on</span></a>
           </nav>
           <nav aria-label="Industries">
             <h2>Who it’s for</h2>
@@ -47,7 +48,7 @@ import { SITE } from '../core/site.config';
         <div class="bottom">
           <p>© {{ site.year }} {{ site.name }} · {{ site.company.name }} All rights reserved.</p>
           <p class="social">@for (x of site.social; track x.label) { <a [href]="x.url" target="_blank" rel="noopener">{{ x.label }}<span class="sr-only"> (opens in a new tab)</span></a> }</p>
-          <p class="badges"><span>Follows X’s rules</span><span>13 languages</span><span>SLA on every ticket</span></p>
+          <p class="badges"><span>10 core services</span><span>Official APIs</span><span>Made for India</span></p>
         </div>
       </div>
     </footer>
@@ -68,6 +69,8 @@ import { SITE } from '../core/site.config';
     h2 { color: var(--fg); font-size: .78rem; font-weight: 750; line-height: 1.3; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
     nav a { width: fit-content; padding: 5px 0; color: var(--fg-2); font-size: .94rem; transition: color .2s, transform .3s var(--ease); }
     nav a:hover { color: var(--fg); transform: translateX(3px); }
+    nav a.xm { display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; color: var(--fg); font-weight: 700; }
+    nav a.xm span { padding: 1px 8px; border-radius: 999px; font-size: .72rem; color: var(--violet-ink); background: var(--violet-soft); }
     .bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-top: 24px; }
     .bottom p { color: var(--fg-3); font-size: .86rem; }
     address { display: flex; gap: 8px; align-items: flex-start; font-style: normal; color: var(--fg-2); font-size: .92rem; line-height: 1.55; }
@@ -83,6 +86,6 @@ import { SITE } from '../core/site.config';
 })
 export class FooterComponent {
   readonly site = SITE;
-  readonly features = FEATURES;
+  readonly services = SERVICES;
   readonly industries = INDUSTRIES;
 }

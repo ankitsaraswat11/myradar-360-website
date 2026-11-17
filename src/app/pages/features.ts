@@ -3,119 +3,142 @@ import { IconComponent } from '../shared/components/icon';
 import { PageHeroComponent } from '../shared/components/page-hero';
 import { SectionHeaderComponent } from '../shared/components/section-header';
 import { CtaBandComponent } from '../shared/components/cta-band';
-import { InsightPanelComponent } from '../shared/components/insight-panel';
-import { SourcesGridComponent } from '../shared/components/sources-grid';
+import { ServiceIconComponent } from '../shared/components/service-icon';
+import { IntegrationsComponent } from '../shared/components/integrations';
+import { XMessagingTeaserComponent } from '../shared/components/x-messaging-teaser';
 import { RevealDirective } from '../shared/directives/reveal.directive';
-import { FEATURES, GUARDRAILS, PLATFORM_EXTRAS } from '../content/content';
+import { SERVICES, SERVICE_GETS, TOOLS } from '../content/content';
 
+/** Services page (/features): the 10 core services in detail, then shared tools, integrations and X Messaging. */
 @Component({
   selector: 'mr-features',
-  imports: [IconComponent, PageHeroComponent, SectionHeaderComponent, CtaBandComponent, InsightPanelComponent, SourcesGridComponent, RevealDirective],
+  imports: [IconComponent, PageHeroComponent, SectionHeaderComponent, CtaBandComponent, ServiceIconComponent, IntegrationsComponent, XMessagingTeaserComponent, RevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <mr-page-hero eyebrow="Features" intro="One ticket list, the full conversation on X, saved replies, auto topics, SLA clocks and citizen ratings — plus monitoring across ten sources.">
-      Everything to close a complaint, <span class="serif">on one screen.</span>
+    <mr-page-hero eyebrow="Services" intro="Six social platforms and four news sources. Pick the ones you need — every service includes alerts, sentiment and reports.">
+      10 core services. <span class="serif">One dashboard.</span>
     </mr-page-hero>
 
-    <nav class="jump" aria-label="Feature sections">
+    <nav class="jump" aria-label="Jump to a service">
       <div class="container rail">
-        @for (f of features; track f.id) {
-          <a [href]="'#' + f.id" (click)="go($event, f.id)" [class.on]="active() === f.id" [attr.aria-current]="active() === f.id ? 'location' : null"><mr-icon [name]="f.icon" [size]="16" />{{ f.title }}</a>
+        @for (s of services; track s.id) {
+          <a [href]="'#' + s.id" (click)="go($event, s.id)" [class.on]="active() === s.id" [attr.aria-current]="active() === s.id ? 'location' : null">
+            <mr-service-icon [service]="s" [size]="26" />{{ s.short }}
+          </a>
         }
       </div>
     </nav>
 
-    @for (f of features; track f.id; let i = $index) {
-      <section class="section feature" [class.soft]="i % 2 === 1" [id]="f.id" [attr.aria-labelledby]="f.id + '-title'">
-        <div class="container grid-2" [class.flip]="i % 2 === 1">
-          <div class="copy" mrReveal>
-            <span class="idx"><span class="icon-tile"><mr-icon [name]="f.icon" [size]="22" /></span><span>0{{ i + 1 }} / 0{{ features.length }}</span></span>
-            <h2 [id]="f.id + '-title'">{{ f.title }}</h2>
-            <p class="lead">{{ f.summary }}</p>
-            <p>{{ f.detail }}</p>
-            <ul class="check-list">
-              @for (p of f.points; track p) { <li><mr-icon name="check" [size]="18" />{{ p }}</li> }
-            </ul>
+    @for (g of groups; track g.k) {
+      <section class="section" [class.soft]="g.k === 'media'" [id]="g.k === 'social' ? 'social' : 'media'" [attr.aria-labelledby]="g.k + '-title'">
+        <div class="container">
+          <mr-section-header [eyebrow]="g.eyebrow" [intro]="g.intro"><span [id]="g.k + '-title'">{{ g.title }}</span></mr-section-header>
+          <div class="list">
+            @for (s of g.items; track s.id; let i = $index) {
+              <article class="svc" [id]="s.id" [style.--c]="s.color" [mrReveal]="(i % 2) * 80" [attr.aria-labelledby]="s.id + '-title'">
+                <mr-service-icon [service]="s" [size]="64" />
+                <div class="body">
+                  <span class="n">{{ pad(indexOf(s) + 1) }} / 10</span>
+                  <h3 [id]="s.id + '-title'">{{ s.name }}</h3>
+                  <p class="t">{{ s.text }}</p>
+                  <p>{{ s.detail }}</p>
+                  <ul class="gets" aria-label="Included">@for (x of gets[s.group]; track x) { <li><mr-icon name="check" [size]="14" [stroke]="2.4" />{{ x }}</li> }</ul>
+                </div>
+              </article>
+            }
           </div>
-          <div class="art" mrReveal="120"><mr-insight-panel [kind]="f.id" /></div>
         </div>
       </section>
     }
 
-    <section class="section inverse guard" id="guardrails" aria-labelledby="guard-title">
+    <section class="section" id="tools" aria-labelledby="tools-title">
       <div class="container">
-        <mr-section-header eyebrow="Guardrails and results" intro="Built in from day one, so the desk stays clean, compliant and on budget."><span id="guard-title">No noise. No duplicates. <span class="serif">Proof of work.</span></span></mr-section-header>
-        <div class="guards">
-          @for (g of guardrails; track g.title; let i = $index) {
-            <article class="gd" [mrReveal]="i * 70"><span class="gi"><mr-icon [name]="g.icon" [size]="22" /></span><h3>{{ g.title }}</h3><p>{{ g.text }}</p></article>
-          }
-        </div>
-      </div>
-    </section>
-
-    <section class="section band" id="sources" aria-labelledby="sources-title">
-      <div class="container">
-        <mr-section-header eyebrow="Sources we monitor" intro="See issues before they reach your inbox: 6 social platforms and 4 media streams, in one view."><span id="sources-title">Monitoring across ten sources</span></mr-section-header>
-        <mr-sources-grid />
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="more-title">
-      <div class="container">
-        <mr-section-header eyebrow="Also included" align="center" intro="Listening and reporting, on the same platform."><span id="more-title">Monitoring, built in</span></mr-section-header>
-        <div class="extras" role="region" aria-label="Also included" tabindex="0">
-          @for (x of extras; track x.title; let i = $index) {
-            <article class="card hover" [mrReveal]="i * 80">
-              <span class="icon-tile"><mr-icon [name]="x.icon" [size]="22" /></span>
-              <h3 class="mt">{{ x.title }}</h3>
-              <p>{{ x.text }}</p>
+        <mr-section-header eyebrow="Included" align="center" intro="These work across all 10 services."><span id="tools-title">Tools in every plan</span></mr-section-header>
+        <div class="tools">
+          @for (t of tools; track t.title; let i = $index) {
+            <article class="card hover" [mrReveal]="(i % 3) * 80">
+              <span class="icon-tile"><mr-icon [name]="t.icon" [size]="22" /></span>
+              <h3 class="mt">{{ t.title }}</h3>
+              <p>{{ t.text }}</p>
             </article>
           }
         </div>
       </div>
     </section>
 
-    <mr-cta-band title="See it work on your own X handle." />
+    <section class="section soft" id="sources" aria-labelledby="int-title">
+      <div class="container">
+        <mr-section-header eyebrow="Integrations" intro="The platforms MyRadar 360 supports today."><span id="int-title">Supported platforms</span></mr-section-header>
+        <mr-integrations />
+      </div>
+    </section>
+
+    <section class="section" aria-label="X Messaging service">
+      <div class="container">
+        <p class="eyebrow xm-eb" mrReveal>Also available</p>
+        <div mrReveal="60">@defer (on viewport; prefetch on idle) { <mr-x-messaging-teaser /> } @placeholder { <div class="ph" aria-hidden="true"></div> }</div>
+      </div>
+    </section>
+
+    <mr-cta-band title="Pick your services. We’ll set them up." text="Tell us your brand and keywords. Get a short, personal demo." />
   `,
   styles: `
     .jump { position: sticky; top: calc(var(--header-h) + var(--header-top) + 6px); z-index: 20; margin-top: -28px; pointer-events: none; }
     .rail { position: relative; pointer-events: auto; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding: 6px; border-radius: 999px;
       background: var(--header-bg); border: 1px solid var(--border); box-shadow: var(--shadow); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); width: fit-content; max-width: calc(100% - 2 * var(--gut)); }
     .rail::-webkit-scrollbar { display: none; }
-    .rail a { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 8px 14px; border-radius: 999px; white-space: nowrap; font-size: .88rem; font-weight: 700; color: var(--fg-2); transition: background-color .25s, color .25s; }
+    .rail a { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 5px 12px 5px 6px; border-radius: 999px; white-space: nowrap; font-size: .86rem; font-weight: 700; color: var(--fg-2); transition: background-color .25s, color .25s; }
     .rail a:hover { color: var(--fg); background: var(--surface-2); }
     .rail a.on { color: var(--bg); background: var(--fg); }
-    .guard { overflow: hidden; background: radial-gradient(50% 70% at 90% 10%, rgba(72, 224, 193, .12), transparent 65%), radial-gradient(40% 60% at 0% 100%, rgba(154, 82, 224, .16), transparent 65%), var(--bg); scroll-margin-top: calc(var(--header-h) + 72px); }
-    .guards { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
-    .gd { grid-column: span 2; display: grid; gap: 10px; align-content: start; padding: 24px; border-radius: var(--radius-lg); background: rgba(14, 24, 40, .9); border: 1px solid var(--border); }
-    .gd:nth-child(4), .gd:nth-child(5) { grid-column: span 3; }
-    .gi { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: rgba(72, 224, 193, .12); color: #74ead2; border: 1px solid rgba(72, 224, 193, .25); }
-    #sources { scroll-margin-top: calc(var(--header-h) + 72px); }
-    .feature { scroll-margin-top: calc(var(--header-h) + 72px); }
-    .copy { display: grid; gap: 18px; justify-items: start; }
-    .idx { display: inline-flex; align-items: center; gap: 14px; font-size: .8rem; font-weight: 750; letter-spacing: .12em; color: var(--fg-3); }
-    .flip .copy { order: 2; }
-    .art { min-width: 0; }
-    .extras { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+
+    #social, #media, #tools, #sources { scroll-margin-top: calc(var(--header-h) + 72px); }
+    .list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 1.8vw, 20px); }
+    .svc { position: relative; overflow: hidden; display: flex; gap: 20px; align-items: flex-start; padding: clamp(20px, 2.6vw, 30px); border-radius: var(--radius-lg);
+      background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm); scroll-margin-top: calc(var(--header-h) + 84px);
+      transition: transform .35s var(--ease), box-shadow .35s, border-color .35s; }
+    .svc::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--c); transform: scaleY(0); transform-origin: top; transition: transform .45s var(--ease-out); }
+    .svc:hover, .svc:target { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--c) 40%, var(--border)); }
+    .svc:hover::before, .svc:target::before { transform: scaleY(1); }
+    .body { display: grid; gap: 8px; min-width: 0; }
+    .n { font-size: .74rem; font-weight: 750; letter-spacing: .12em; color: var(--fg-3); }
+    .body h3 { font-size: clamp(1.2rem, 1.8vw, 1.45rem); }
+    .t { color: var(--fg); font-weight: 650; }
+    .gets { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+    .gets li { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px; font-size: .8rem; font-weight: 700; color: var(--fg); background: var(--surface-2); }
+    .gets mr-icon { color: var(--pos); }
+
+    .tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
     .mt { margin: 18px 0 8px; }
-    @media (max-width: 1023px) { .guards { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .gd, .gd:nth-child(4), .gd:nth-child(5) { grid-column: auto; } .gd:last-child { grid-column: 1 / -1; } .flip .copy { order: 0; } .art { width: min(100%, 620px); } .extras { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .xm-eb { margin-bottom: 16px; }
+    .ph { min-height: 560px; border-radius: var(--radius-xl); }
+
+    @media (max-width: 1023px) { .tools { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 819px) { .list { grid-template-columns: minmax(0, 1fr); } }
     @media (max-width: 639px) {
-      .guards { grid-template-columns: minmax(0, 1fr); }
       .jump { margin-top: 0; top: calc(var(--header-h) + 14px); }
       .rail { border-radius: 16px; }
-      .extras { display: grid; grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 82%; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
-        margin-inline: calc(var(--gut) * -1); padding: 4px var(--gut) 12px; scroll-padding-inline: var(--gut); }
-      .extras::-webkit-scrollbar { display: none; }
-      .extras > * { scroll-snap-align: start; }
-      .extras > .rv { opacity: 1; transform: none; }
+      .tools { grid-template-columns: minmax(0, 1fr); }
+      .ph { min-height: 900px; }
     }
+    @media (max-width: 479px) { .svc { flex-direction: column; gap: 14px; } }
   `,
 })
 export class FeaturesPage {
-  readonly features = FEATURES;
-  readonly extras = PLATFORM_EXTRAS;
-  readonly guardrails = GUARDRAILS;
+  readonly services = SERVICES;
+  readonly gets = SERVICE_GETS;
+  readonly tools = TOOLS;
+  readonly groups = [
+    { k: 'social' as const, eyebrow: 'Social media', title: 'Six social platforms', intro: 'See what people post, share and comment about you.', items: SERVICES.filter((s) => s.group === 'social') },
+    { k: 'media' as const, eyebrow: 'News & TV', title: 'Four news sources', intro: 'Know when the news covers you — online, in print, on TV and on X.', items: SERVICES.filter((s) => s.group === 'media') },
+  ];
   readonly active = signal<string>('');
+
+  indexOf(s: (typeof SERVICES)[number]): number {
+    return SERVICES.indexOf(s);
+  }
+  pad(n: number): string {
+    return n < 10 ? `0${n}` : String(n);
+  }
 
   constructor() {
     let io: IntersectionObserver | undefined;
@@ -127,8 +150,8 @@ export class FeaturesPage {
         },
         { rootMargin: '-35% 0px -60% 0px' },
       );
-      for (const f of this.features) {
-        const el = document.getElementById(f.id);
+      for (const s of this.services) {
+        const el = document.getElementById(s.id);
         if (el) io.observe(el);
       }
     });

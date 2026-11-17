@@ -1,14 +1,16 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, NgZone, afterNextRender, inject, signal, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { FEATURES } from '../../content/content';
+import { X_FEATURES } from '../../content/content';
 import { IconComponent } from './icon';
 import { InsightPanelComponent } from './insight-panel';
 import { Autoplay, attachSwipe } from '../interaction/swipe';
+import { ScrollSteps } from '../interaction/scroll-steps';
 
 /**
  * Homepage feature showcase: a tab list of the six capabilities beside a live-looking
  * product panel. Click a tab, use arrow keys, swipe/drag the panel or the controls.
- * Autoplays, pausing on hover, focus, drag, off-screen and for reduced motion.
+ * Laptop/desktop: the section pins while you scroll and steps through 01 → 06 with the page.
+ * Phones: autoplays, pausing on hover, focus, drag, off-screen and for reduced motion.
  */
 @Component({
   selector: 'mr-feature-showcase',
@@ -16,8 +18,10 @@ import { Autoplay, attachSwipe } from '../interaction/swipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '(mouseenter)': 'auto.hold("hover", true)', '(mouseleave)': 'auto.hold("hover", false)', '(focusin)': 'auto.hold("focus", true)', '(focusout)': 'auto.hold("focus", false)' },
   template: `
-    <div class="fs" [class.paused]="!running()">
-      <ul class="list" aria-label="MyRadar 360 features" (keydown)="tabKey($event)">
+    <div #scroller class="scroller" [class.on]="pinned()" [style.--n]="features.length">
+    <div #pin class="pin">
+    <div class="fs" [class.paused]="!running()" [class.pinned]="pinned()">
+      <ul class="list" aria-label="X Messaging features" (keydown)="tabKey($event)">
         @for (f of features; track f.id; let i = $index) {
           <li class="item" [class.on]="i === active()">
             <button type="button" class="tab" [id]="'fs-tab-' + f.id" [attr.aria-expanded]="i === active()" [attr.aria-controls]="'fs-more-' + f.id + ' fs-panel'"
@@ -25,10 +29,10 @@ import { Autoplay, attachSwipe } from '../interaction/swipe';
               <span class="num">0{{ i + 1 }}</span>
               <span class="ic"><mr-icon [name]="f.icon" [size]="18" /></span>
               <span class="tt">{{ f.title }}</span>
-              @if (i === active() && auto.enabled) { <span class="prog"></span> }
+              @if (i === active() && (pinned() || auto.enabled)) { <span class="prog"></span> }
             </button>
             <div class="more" [id]="'fs-more-' + f.id" [attr.inert]="i === active() ? null : ''">
-              <div><p>{{ f.summary }}</p><a class="text-link" routerLink="/features" [fragment]="f.id">Learn more <mr-icon name="arrow-right" [size]="16" /></a></div>
+              <div><p>{{ f.summary }}</p><a class="text-link" routerLink="/x-messaging" [fragment]="f.id">Learn more <mr-icon name="arrow-right" [size]="16" /></a></div>
             </div>
           </li>
         }
@@ -37,7 +41,7 @@ import { Autoplay, attachSwipe } from '../interaction/swipe';
       <div class="stage">
         <div class="m-sum">
           <p><b>{{ current().title }}.</b> {{ current().summary }}</p>
-          <a class="text-link" routerLink="/features" [fragment]="current().id">Learn more <mr-icon name="arrow-right" [size]="16" /></a>
+          <a class="text-link" routerLink="/x-messaging" [fragment]="current().id">Learn more <mr-icon name="arrow-right" [size]="16" /></a>
         </div>
         <div #vp class="vp" id="fs-panel" role="group" aria-label="Feature preview — use the arrow keys or swipe" aria-roledescription="carousel"
              tabindex="0" (keydown)="stageKey($event)" [class.drag]="dragging()">
@@ -52,11 +56,19 @@ import { Autoplay, attachSwipe } from '../interaction/swipe';
           <span class="count" aria-hidden="true">0{{ active() + 1 }} / 0{{ features.length }}</span>
           <button type="button" class="nav" (click)="go(active() + 1)" aria-label="Next feature"><mr-icon name="arrow-right" [size]="18" /></button>
         </div>
-        <p class="hint" aria-hidden="true">Swipe or drag the panel to explore</p>
+        <p class="hint" aria-hidden="true">{{ pinned() ? 'Keep scrolling to see all six' : 'Swipe or drag the panel to explore' }}</p>
       </div>
+    </div>
+    </div>
+    <div class="spacer" aria-hidden="true"></div>
     </div>
   `,
   styles: `
+    /* scroll-driven mode: extra scroll length, content pinned below the header */
+    .spacer { display: none; }
+    .scroller.on .spacer { display: block; height: calc((var(--n) - 1) * 42vh); }
+    .scroller.on .pin { position: sticky; top: calc(var(--header-h) + var(--header-top) + 24px); }
+    .pinned .prog { animation: none; transform: scaleX(var(--sp, 0)); transition: transform .12s linear; }
     .fs { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(28px, 4vw, 64px); align-items: start; }
     .list { position: relative; list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; border-top: 1px solid var(--border); }
     .item { border-bottom: 1px solid var(--border); }
@@ -111,11 +123,16 @@ import { Autoplay, attachSwipe } from '../interaction/swipe';
   `,
 })
 export class FeatureShowcaseComponent {
-  readonly features = FEATURES;
+  readonly features = X_FEATURES;
   readonly active = signal(0);
   readonly dir = signal(1);
   readonly dragging = signal(false);
   readonly running = signal(true);
+  /** True on larger screens: the page scroll drives the active feature. */
+  readonly pinned = signal(false);
+  private steps?: ScrollSteps;
+  private readonly scroller = viewChild<ElementRef<HTMLElement>>('scroller');
+  private readonly pin = viewChild<ElementRef<HTMLElement>>('pin');
   readonly current = () => this.features[this.active()];
   private readonly vp = viewChild<ElementRef<HTMLElement>>('vp');
   private readonly host = inject(ElementRef<HTMLElement>).nativeElement as HTMLElement;
@@ -141,12 +158,19 @@ export class FeatureShowcaseComponent {
         },
       });
       this.auto.start(this.host);
+      this.steps = new ScrollSteps(this.zone, this.scroller()!.nativeElement, this.pin()!.nativeElement, {
+        count: this.features.length,
+        index: (i) => { if (i !== this.active()) { this.dir.set(i > this.active() ? 1 : -1); this.active.set(i); } },
+        progress: (p) => this.host.style.setProperty('--sp', p.toFixed(3)),
+        mode: (on) => { this.pinned.set(on); this.auto.hold('scroll', on); },
+      });
     });
-    inject(DestroyRef).onDestroy(() => { off(); this.auto.stop(); });
+    inject(DestroyRef).onDestroy(() => { off(); this.auto.stop(); this.steps?.destroy(); });
   }
 
   go(i: number): void {
     const n = this.features.length;
+    if (this.pinned()) { this.steps?.scrollTo(Math.min(n - 1, Math.max(0, i))); return; }
     const next = (i + n) % n;
     this.dir.set(next >= this.active() ? 1 : -1);
     this.active.set(next);
@@ -156,6 +180,7 @@ export class FeatureShowcaseComponent {
 
   step(by: number, manual = true): void {
     const n = this.features.length;
+    if (this.pinned()) { this.steps?.scrollTo(Math.min(n - 1, Math.max(0, this.active() + by))); return; }
     this.dir.set(by > 0 ? 1 : -1);
     this.active.set((this.active() + by + n) % n);
     this.auto.reset();
@@ -165,13 +190,18 @@ export class FeatureShowcaseComponent {
 
   tabKey(e: KeyboardEvent): void {
     if (!(e.target as HTMLElement).classList.contains('tab')) return;
+    const n = this.features.length;
     const keys: Record<string, number> = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 };
-    if (e.key in keys) this.go(this.active() + keys[e.key]);
-    else if (e.key === 'Home') this.go(0);
-    else if (e.key === 'End') this.go(this.features.length - 1);
+    let t: number;
+    if (e.key in keys) t = this.active() + keys[e.key];
+    else if (e.key === 'Home') t = 0;
+    else if (e.key === 'End') t = n - 1;
     else return;
     e.preventDefault();
-    this.focusTab();
+    t = this.pinned() ? Math.min(n - 1, Math.max(0, t)) : (t + n) % n;
+    this.go(t);
+    const id = this.features[t].id;
+    queueMicrotask(() => this.host.querySelector<HTMLElement>(`#fs-tab-${id}`)?.focus({ preventScroll: true }));
   }
 
   stageKey(e: KeyboardEvent): void {
@@ -179,10 +209,6 @@ export class FeatureShowcaseComponent {
     else if (e.key === 'ArrowLeft') this.step(-1);
     else return;
     e.preventDefault();
-  }
-
-  private focusTab(): void {
-    queueMicrotask(() => this.host.querySelector<HTMLElement>(`#fs-tab-${this.current().id}`)?.focus());
   }
 
   /** Keep the active pill visible in the mobile rail without moving the page. */

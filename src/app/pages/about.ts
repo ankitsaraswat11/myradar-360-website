@@ -12,20 +12,20 @@ import { SITE } from '../core/site.config';
   imports: [IconComponent, PageHeroComponent, SectionHeaderComponent, CtaBandComponent, RevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <mr-page-hero eyebrow="About MyRadar 360" intro="So no citizen complaint on X goes untracked, unowned or unanswered.">
-      Every voice on X <span class="serif">deserves a reply.</span>
+    <mr-page-hero eyebrow="About MyRadar 360" intro="So you always know what people say about you — and can act on it.">
+      Hear every voice. <span class="serif">See the full picture.</span>
     </mr-page-hero>
 
     <section class="section" aria-labelledby="intro-title">
       <div class="container grid-2">
         <div class="copy" mrReveal>
           <p class="eyebrow">Why we built it</p>
-          <h2 id="intro-title">Complaints moved to X. Support didn’t.</h2>
+          <h2 id="intro-title">The conversation is everywhere. Teams aren’t.</h2>
           <p>
-            Citizens now raise complaints on X — they tag a government office’s handle or send it a DM. Most of these are never tracked. Nobody owns them, the citizen gets no reply, and the office cannot show what it handled.
+            People talk about brands, leaders and public offices on many platforms — social media, news sites, newspapers and TV. Checking each one by hand is slow, and important posts get missed.
           </p>
           <p>
-            MyRadar 360 turns every such message into a ticket with an owner, a deadline and a reply sent back on X — in the citizen’s own language. And it keeps a radar on the wider conversation, across ten sources, so nothing important arrives as a surprise.
+            MyRadar 360 brings 10 services into one dashboard, with alerts, sentiment and simple reports. And with X Messaging, messages sent to your X handle become tickets that get answered.
           </p>
           <p class="by">MyRadar 360 is built by <a [href]="site.company.url" target="_blank" rel="noopener">{{ site.company.name }}<span class="sr-only"> (opens in a new tab)</span></a>, Noida — serving enterprises since {{ site.company.since }}.</p>
         </div>
@@ -40,12 +40,12 @@ import { SITE } from '../core/site.config';
           <article class="card vm-card" mrReveal>
             <span class="icon-tile"><mr-icon name="compass" [size]="22" /></span>
             <h3>Our vision</h3>
-            <p>Every citizen who reaches out on X gets heard, helped and answered.</p>
+            <p>Every team can hear what people say about them — clearly, and in time.</p>
           </article>
           <article class="card vm-card" mrReveal="100">
             <span class="icon-tile"><mr-icon name="target" [size]="22" /></span>
             <h3>Our mission</h3>
-            <p>Give every public office a simple way to track, answer and close complaints on X — and prove it.</p>
+            <p>Bring social media, news and TV into one simple view that anyone can use.</p>
           </article>
         </div>
       </div>
@@ -53,7 +53,7 @@ import { SITE } from '../core/site.config';
 
     <section class="section" aria-labelledby="obj-title">
       <div class="container">
-        <mr-section-header eyebrow="Product objectives" intro="Five promises behind every ticket."><span id="obj-title">What we set out to do</span></mr-section-header>
+        <mr-section-header eyebrow="Product objectives" intro="Five promises behind the product."><span id="obj-title">What we set out to do</span></mr-section-header>
         <ol class="objectives">
           @for (o of objectives; track o.title; let i = $index) {
             <li [mrReveal]="i * 70">

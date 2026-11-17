@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, NgZone, aft
 import { STORY } from '../../content/content';
 import { IconComponent } from './icon';
 import { Autoplay, attachSwipe } from '../interaction/swipe';
+import { ScrollSteps } from '../interaction/scroll-steps';
 
 interface Item { step: number; kind: 'in' | 'out' | 'sys'; label: string; text: string; lang?: string; extra?: 'photo' | 'saved' | 'stars'; }
 
@@ -22,8 +23,9 @@ const STATUS = ['Mention received', 'Open', 'Open', 'Assigned', 'In progress', '
 
 /**
  * "A water complaint, start to finish": seven steps beside a sample ticket screen that
- * builds up as you go. Click a step, use arrow keys, swipe/drag the screen, or let it play.
- * Autoplay pauses on hover, focus, drag, off-screen and for reduced motion.
+ * builds up as you go. Click a step, use arrow keys or swipe/drag the screen.
+ * Laptop/desktop: the section pins while you scroll and steps through 1 → 7 with the page.
+ * Phones: autoplays, pausing on hover, focus, drag, off-screen and for reduced motion.
  */
 @Component({
   selector: 'mr-story-walkthrough',
@@ -31,14 +33,16 @@ const STATUS = ['Mention received', 'Open', 'Open', 'Assigned', 'In progress', '
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '(mouseenter)': 'auto.hold("hover", true)', '(mouseleave)': 'auto.hold("hover", false)', '(focusin)': 'auto.hold("focus", true)', '(focusout)': 'auto.hold("focus", false)' },
   template: `
-    <div class="sw" [class.paused]="!running()">
+    <div #scroller class="scroller" [class.on]="pinned()" [style.--n]="story.length">
+    <div #pin class="pin">
+    <div class="sw" [class.paused]="!running()" [class.pinned]="pinned()">
       <ol class="steps" aria-label="Steps" (keydown)="key($event)">
         @for (s of story; track s.key; let i = $index) {
           <li [class.on]="i === i0()" [class.done]="i < i0()">
             <button type="button" class="st" [attr.aria-current]="i === i0() ? 'step' : null" [attr.aria-controls]="'sw-screen'" (click)="go(i)">
               <span class="n">{{ i + 1 }}</span>
               <span class="tx"><b>{{ s.title }}</b><span class="d"><span>{{ s.text }}</span></span></span>
-              @if (i === i0() && auto.enabled) { <span class="prog"></span> }
+              @if (i === i0() && (pinned() || auto.enabled)) { <span class="prog"></span> }
             </button>
           </li>
         }
@@ -89,8 +93,18 @@ const STATUS = ['Mention received', 'Open', 'Open', 'Assigned', 'In progress', '
         </div>
       </div>
     </div>
+    </div>
+    <div class="spacer" aria-hidden="true"></div>
+    </div>
   `,
   styles: `
+    /* scroll-driven mode: extra scroll length, content pinned below the header */
+    .spacer { display: none; }
+    .scroller.on .spacer { display: block; height: calc((var(--n) - 1) * 40vh); }
+    .scroller.on .pin { position: sticky; top: calc(var(--header-h) + var(--header-top) + 20px); }
+    .pinned .prog { animation: none; transform: scaleX(var(--sp, 0)); transition: transform .12s linear; }
+    .pinned .thread { height: clamp(170px, calc(100vh - 500px), 300px); }
+    .pinned .stage { position: static; }
     .sw { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
     .steps { position: relative; list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
     .steps::before { content: ''; position: absolute; left: 17px; top: 22px; bottom: 22px; width: 2px; background: var(--border-strong); }
@@ -175,6 +189,11 @@ export class StoryWalkthroughComponent {
   readonly story = STORY;
   readonly i0 = signal(0);
   readonly running = signal(true);
+  /** True on larger screens: the page scroll drives the active step. */
+  readonly pinned = signal(false);
+  private steps?: ScrollSteps;
+  private readonly scroller = viewChild<ElementRef<HTMLElement>>('scroller');
+  private readonly pin = viewChild<ElementRef<HTMLElement>>('pin');
   readonly status = computed(() => STATUS[this.i0()]);
   readonly visible = computed(() => THREAD.filter((m) => m.step <= this.i0()));
   private readonly vp = viewChild<ElementRef<HTMLElement>>('vp');
@@ -197,14 +216,21 @@ export class StoryWalkthroughComponent {
         },
       });
       this.auto.start(this.host);
+      this.steps = new ScrollSteps(this.zone, this.scroller()!.nativeElement, this.pin()!.nativeElement, {
+        count: this.story.length,
+        index: (i) => this.i0.set(i),
+        progress: (p) => this.host.style.setProperty('--sp', p.toFixed(3)),
+        mode: (on) => { this.pinned.set(on); this.auto.hold('scroll', on); },
+      });
     });
-    inject(DestroyRef).onDestroy(() => { off(); this.auto.stop(); });
+    inject(DestroyRef).onDestroy(() => { off(); this.auto.stop(); this.steps?.destroy(); });
   }
 
   /** Manual navigation stops at the ends; autoplay loops back to the start. */
   go(i: number, manual = true): void {
     const n = this.story.length;
     const next = manual ? Math.min(n - 1, Math.max(0, i)) : (i + n) % n;
+    if (this.pinned()) { this.steps?.scrollTo(next); return; }
     this.i0.set(next);
     this.auto.reset();
   }
