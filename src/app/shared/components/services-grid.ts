@@ -7,8 +7,8 @@ import { ServiceIconComponent } from './service-icon';
 type Filter = 'all' | 'social' | 'media';
 
 /**
- * The 10 core services as cards. A small filter switches between all, social media and
- * news & TV. Each card links to the service's section on the Services page.
+ * The core services as cards. A small filter switches between all, major platforms and
+ * news & media. Each card links to the service's section on the Services page.
  */
 @Component({
   selector: 'mr-services-grid',
@@ -18,7 +18,7 @@ type Filter = 'all' | 'social' | 'media';
     @if (showFilter()) {
       <div class="filter" role="group" aria-label="Show services">
         @for (f of filters; track f.k) {
-          <button type="button" [class.on]="filter() === f.k" [attr.aria-pressed]="filter() === f.k" (click)="filter.set(f.k)">{{ f.label }} <span>{{ count(f.k) }}</span></button>
+          <button type="button" [class.on]="filter() === f.k" [attr.aria-pressed]="filter() === f.k" (click)="filter.set(f.k)">{{ f.label }}</button>
         }
       </div>
     }
@@ -26,7 +26,7 @@ type Filter = 'all' | 'social' | 'media';
       @for (s of shown(); track s.id; let i = $index) {
         <li class="sc" [style.--c]="s.color" [style.--i]="i">
           <a [routerLink]="'/features'" [fragment]="s.id" class="lnk">
-            <span class="top"><mr-service-icon [service]="s" [size]="52" /><span class="idx" aria-hidden="true">{{ pad(s) }}</span></span>
+            <span class="top"><mr-service-icon [service]="s" [size]="52" /><mr-icon class="go" name="arrow-up-right" [size]="18" /></span>
             <h3>{{ s.name }}</h3>
             <p>{{ s.text }}</p>
             <span class="gets">{{ gets[s.group].join(' · ') }}</span>
@@ -45,7 +45,7 @@ type Filter = 'all' | 'social' | 'media';
     .filter button.on { background: var(--fg); color: var(--bg); }
     .filter button.on span { background: color-mix(in srgb, var(--bg) 20%, transparent); color: var(--bg); }
 
-    .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(12px, 1.4vw, 18px); }
+    .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 1.4vw, 18px); }
     .sc { animation: in .5s var(--ease-out) both; animation-delay: calc(var(--i) * 45ms); }
     @keyframes in { from { opacity: 0; transform: translateY(14px); } }
     .lnk { position: relative; height: 100%; display: flex; flex-direction: column; gap: 10px; padding: 20px; border-radius: var(--radius-lg); color: inherit; text-decoration: none; overflow: hidden;
@@ -56,8 +56,8 @@ type Filter = 'all' | 'social' | 'media';
     .lnk:hover mr-service-icon, .lnk:focus-visible mr-service-icon { color: #fff; background: var(--c); border-color: transparent; }
     mr-service-icon { transition: background-color .3s, color .3s; }
     .top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
-    .idx { font-size: .8rem; font-weight: 750; letter-spacing: .08em; color: var(--fg-3); font-variant-numeric: tabular-nums; transition: color .3s; }
-    .lnk:hover .idx { color: var(--c); }
+    .go { color: var(--fg-3); transition: color .3s, transform .3s var(--ease); }
+    .lnk:hover .go { color: var(--c); transform: translate(2px, -2px); }
     h3 { font-size: 1.08rem; }
     p { font-size: .92rem; line-height: 1.55; color: var(--fg-2); flex: 1; }
     .gets { font-size: .76rem; font-weight: 650; color: var(--fg-3); }
@@ -65,12 +65,11 @@ type Filter = 'all' | 'social' | 'media';
     .more mr-icon { transition: transform .3s var(--ease); }
     .lnk:hover .more mr-icon { transform: translateX(4px); }
 
-    @media (max-width: 1199px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-    @media (max-width: 959px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-    @media (max-width: 719px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .lnk { padding: 16px; } .gets { display: none; } }
+    @media (max-width: 959px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 719px) { .lnk { padding: 16px; } .gets { display: none; } }
     @media (max-width: 419px) { .filter button { padding: 6px 11px; font-size: .86rem; gap: 6px; } .grid { grid-template-columns: minmax(0, 1fr); }
       .lnk { display: grid; grid-template-columns: auto 1fr; column-gap: 14px; row-gap: 4px; align-items: start; }
-      .top { grid-row: span 3; margin: 0; } .idx { display: none; } .more { grid-column: 2; } }
+      .top { grid-row: span 3; margin: 0; } .go { display: none; } .more { grid-column: 2; } }
     @media (prefers-reduced-motion: reduce) { .sc { animation: none; } }
   `,
 })
@@ -79,14 +78,7 @@ export class ServicesGridComponent {
   readonly filter = signal<Filter>('all');
   readonly gets = SERVICE_GETS;
   readonly filters: { k: Filter; label: string }[] = [
-    { k: 'all', label: 'All services' }, { k: 'social', label: 'Social media' }, { k: 'media', label: 'News & TV' },
+    { k: 'all', label: 'All services' }, { k: 'social', label: 'Major platforms' }, { k: 'media', label: 'News & Media' },
   ];
   readonly shown = computed<Service[]>(() => (this.filter() === 'all' ? SERVICES : SERVICES.filter((s) => s.group === this.filter())));
-  pad(s: Service): string {
-    const n = SERVICES.indexOf(s) + 1;
-    return n < 10 ? `0${n}` : String(n);
-  }
-  count(k: Filter): number {
-    return k === 'all' ? SERVICES.length : SERVICES.filter((s) => s.group === k).length;
-  }
 }

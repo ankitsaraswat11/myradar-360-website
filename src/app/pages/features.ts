@@ -5,18 +5,17 @@ import { SectionHeaderComponent } from '../shared/components/section-header';
 import { CtaBandComponent } from '../shared/components/cta-band';
 import { ServiceIconComponent } from '../shared/components/service-icon';
 import { IntegrationsComponent } from '../shared/components/integrations';
-import { XMessagingTeaserComponent } from '../shared/components/x-messaging-teaser';
 import { RevealDirective } from '../shared/directives/reveal.directive';
 import { SERVICES, SERVICE_GETS, TOOLS } from '../content/content';
 
-/** Services page (/features): the 10 core services in detail, then shared tools, integrations and X Messaging. */
+/** Services page (/features): the core services in detail, then shared tools and integrations. */
 @Component({
   selector: 'mr-features',
-  imports: [IconComponent, PageHeroComponent, SectionHeaderComponent, CtaBandComponent, ServiceIconComponent, IntegrationsComponent, XMessagingTeaserComponent, RevealDirective],
+  imports: [IconComponent, PageHeroComponent, SectionHeaderComponent, CtaBandComponent, ServiceIconComponent, IntegrationsComponent, RevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <mr-page-hero eyebrow="Services" intro="Six social platforms and four news sources. Pick the ones you need — every service includes alerts, sentiment and reports.">
-      10 core services. <span class="serif">One dashboard.</span>
+    <mr-page-hero eyebrow="Core services" intro="Major platforms and news media. Pick the ones you need — every service includes alerts, sentiment and reports.">
+      Every platform that matters. <span class="serif">Always in view.</span>
     </mr-page-hero>
 
     <nav class="jump" aria-label="Jump to a service">
@@ -38,7 +37,6 @@ import { SERVICES, SERVICE_GETS, TOOLS } from '../content/content';
               <article class="svc" [id]="s.id" [style.--c]="s.color" [mrReveal]="(i % 2) * 80" [attr.aria-labelledby]="s.id + '-title'">
                 <mr-service-icon [service]="s" [size]="64" />
                 <div class="body">
-                  <span class="n">{{ pad(indexOf(s) + 1) }} / 10</span>
                   <h3 [id]="s.id + '-title'">{{ s.name }}</h3>
                   <p class="t">{{ s.text }}</p>
                   <p>{{ s.detail }}</p>
@@ -53,7 +51,7 @@ import { SERVICES, SERVICE_GETS, TOOLS } from '../content/content';
 
     <section class="section" id="tools" aria-labelledby="tools-title">
       <div class="container">
-        <mr-section-header eyebrow="Included" align="center" intro="These work across all 10 services."><span id="tools-title">Tools in every plan</span></mr-section-header>
+        <mr-section-header eyebrow="Included" align="center" intro="These work across every service."><span id="tools-title">Tools in every plan</span></mr-section-header>
         <div class="tools">
           @for (t of tools; track t.title; let i = $index) {
             <article class="card hover" [mrReveal]="(i % 3) * 80">
@@ -73,13 +71,6 @@ import { SERVICES, SERVICE_GETS, TOOLS } from '../content/content';
       </div>
     </section>
 
-    <section class="section" aria-label="X Messaging service">
-      <div class="container">
-        <p class="eyebrow xm-eb" mrReveal>Also available</p>
-        <div mrReveal="60">@defer (on viewport; prefetch on idle) { <mr-x-messaging-teaser /> } @placeholder { <div class="ph" aria-hidden="true"></div> }</div>
-      </div>
-    </section>
-
     <mr-cta-band title="Pick your services. We’ll set them up." text="Tell us your brand and keywords. Get a short, personal demo." />
   `,
   styles: `
@@ -93,6 +84,7 @@ import { SERVICES, SERVICE_GETS, TOOLS } from '../content/content';
 
     #social, #media, #tools, #sources { scroll-margin-top: calc(var(--header-h) + 72px); }
     .list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 1.8vw, 20px); }
+    .list > :last-child:nth-child(odd) { grid-column: 1 / -1; }
     .svc { position: relative; overflow: hidden; display: flex; gap: 20px; align-items: flex-start; padding: clamp(20px, 2.6vw, 30px); border-radius: var(--radius-lg);
       background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm); scroll-margin-top: calc(var(--header-h) + 84px);
       transition: transform .35s var(--ease), box-shadow .35s, border-color .35s; }
@@ -109,7 +101,6 @@ import { SERVICES, SERVICE_GETS, TOOLS } from '../content/content';
 
     .tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
     .mt { margin: 18px 0 8px; }
-    .xm-eb { margin-bottom: 16px; }
     .ph { min-height: 560px; border-radius: var(--radius-xl); }
 
     @media (max-width: 1023px) { .tools { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -128,17 +119,10 @@ export class FeaturesPage {
   readonly gets = SERVICE_GETS;
   readonly tools = TOOLS;
   readonly groups = [
-    { k: 'social' as const, eyebrow: 'Social media', title: 'Six social platforms', intro: 'See what people post, share and comment about you.', items: SERVICES.filter((s) => s.group === 'social') },
-    { k: 'media' as const, eyebrow: 'News & TV', title: 'Four news sources', intro: 'Know when the news covers you — online, in print, on TV and on X.', items: SERVICES.filter((s) => s.group === 'media') },
+    { k: 'social' as const, eyebrow: 'Major platforms', title: 'Where people talk', intro: 'See what people post, share and comment about you.', items: SERVICES.filter((s) => s.group === 'social') },
+    { k: 'media' as const, eyebrow: 'News & Media', title: 'Where news breaks', intro: 'Know when the news covers you — online, in print and on X.', items: SERVICES.filter((s) => s.group === 'media') },
   ];
   readonly active = signal<string>('');
-
-  indexOf(s: (typeof SERVICES)[number]): number {
-    return SERVICES.indexOf(s);
-  }
-  pad(n: number): string {
-    return n < 10 ? `0${n}` : String(n);
-  }
 
   constructor() {
     let io: IntersectionObserver | undefined;

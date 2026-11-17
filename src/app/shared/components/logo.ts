@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 /**
  * MyRadar 360 logo: the brand mark (target rings with an arrow, public/brand/logo-mark.png)
- * plus the "MY RADAR 360®" wordmark, set in text so it stays sharp and readable in both themes.
+ * plus the "MYRADAR 360®" wordmark, set in text so it stays sharp and readable in both themes.
  * `variant="light"` forces the light-on-dark wordmark for always-dark surfaces.
  */
 @Component({
@@ -12,7 +12,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
     <span class="logo" [class.light]="variant() === 'light'">
       <img src="/brand/logo-mark.png" alt="" [attr.width]="size()" [attr.height]="size()" decoding="async" />
       @if (showText()) {
-        <span class="word">MY RADAR <span class="num">360</span><sup>®</sup></span>
+        <span class="word">MYRADAR <span class="num">360</span><sup>®</sup></span>
       }
     </span>
   `,

@@ -4,22 +4,23 @@ import { IconComponent } from '../shared/components/icon';
 import { HeroVisualComponent } from '../shared/components/hero-visual';
 import { SectionHeaderComponent } from '../shared/components/section-header';
 import { ServicesGridComponent } from '../shared/components/services-grid';
-import { IntegrationsComponent } from '../shared/components/integrations';
-import { XMessagingTeaserComponent } from '../shared/components/x-messaging-teaser';
+import { EngagementTeaserComponent } from '../shared/components/engagement-teaser';
+import { CapabilitiesComponent } from '../shared/components/capabilities';
+import { ConnectFlowComponent } from '../shared/components/connect-flow';
 import { StepsTimelineComponent } from '../shared/components/steps-timeline';
 import { CtaBandComponent } from '../shared/components/cta-band';
 import { ServiceIconComponent } from '../shared/components/service-icon';
 import { RevealDirective } from '../shared/directives/reveal.directive';
-import { CountDirective } from '../shared/directives/count.directive';
 import { SERVICES, TOOLS, VALUE, WHY } from '../content/content';
 
 /**
  * Homepage, in the order of the content brief:
- * Hero → Value → 10 core services → Integrations → X Messaging → How it works → Why → CTA.
+ * Hero → Value → Core services → Beyond channels (Intelligent Engagement)
+ * → Platform in action → How it works → Why → CTA.
  */
 @Component({
   selector: 'mr-home',
-  imports: [RouterLink, IconComponent, HeroVisualComponent, SectionHeaderComponent, ServicesGridComponent, IntegrationsComponent, XMessagingTeaserComponent, StepsTimelineComponent, CtaBandComponent, ServiceIconComponent, RevealDirective, CountDirective],
+  imports: [RouterLink, IconComponent, HeroVisualComponent, SectionHeaderComponent, ServicesGridComponent, EngagementTeaserComponent, CapabilitiesComponent, ConnectFlowComponent, StepsTimelineComponent, CtaBandComponent, ServiceIconComponent, RevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <!-- 1 · Hero -->
@@ -35,7 +36,7 @@ import { SERVICES, TOOLS, VALUE, WHY } from '../content/content';
         <div class="hero-copy">
           <p class="eyebrow" mrReveal>Social media & news monitoring</p>
           <h1 mrReveal="80"><span class="l1">All your social media and news.</span> <span class="serif">One clear view.</span></h1>
-          <p class="lead" mrReveal="160">MyRadar 360 tracks what people say about you on 10 platforms — from X and YouTube to newspapers and TV. Get alerts, sentiment and simple reports.</p>
+          <p class="lead" mrReveal="160">MyRadar 360 tracks what people say about you across major platforms and news media — from X and YouTube to news sites and newspapers. Get alerts, sentiment and simple reports.</p>
           <div class="hero-actions" mrReveal="240">
             <a class="btn btn-primary" href="#services" (click)="go($event, 'services')">Explore Services <mr-icon name="arrow-right" [size]="18" /></a>
             <a class="btn btn-secondary" routerLink="/contact">Get Started</a>
@@ -60,20 +61,14 @@ import { SERVICES, TOOLS, VALUE, WHY } from '../content/content';
             </article>
           }
         </div>
-        <dl class="stats" mrReveal>
-          <div><dt>Core services</dt><dd [mrCountTo]="services.length">{{ services.length }}</dd></div>
-          <div><dt>Social platforms</dt><dd [mrCountTo]="socialCount">{{ socialCount }}</dd></div>
-          <div><dt>News & TV sources</dt><dd [mrCountTo]="mediaCount">{{ mediaCount }}</dd></div>
-          <div><dt>Dashboard</dt><dd>1</dd></div>
-        </dl>
       </div>
     </section>
 
-    <!-- 3 · 10 core services (main focus) -->
+    <!-- 3 · Core services (main focus) -->
     <section class="section soft services-s" id="services" aria-labelledby="services-title">
       <div class="container">
-        <mr-section-header eyebrow="Our services" intro="Pick the platforms you care about. Each one comes with mentions, sentiment, alerts and reports.">
-          <span id="services-title">10 core services. <span class="serif">One dashboard.</span></span>
+        <mr-section-header eyebrow="Core services" intro="Pick the platforms you care about. Each one comes with mentions, sentiment, alerts and reports.">
+          <span id="services-title">Every platform that matters. <span class="serif">Always in view.</span></span>
         </mr-section-header>
         <div mrReveal="60"><mr-services-grid /></div>
         <div class="tools" mrReveal>
@@ -84,21 +79,26 @@ import { SERVICES, TOOLS, VALUE, WHY } from '../content/content';
       </div>
     </section>
 
-    <!-- 4 · Integrations -->
-    <section class="section" id="integrations" aria-labelledby="int-title">
+    <!-- 4 · Beyond channels: Intelligent Engagement -->
+    <section class="section" id="engagement" aria-labelledby="eng-title">
       <div class="container">
-        <mr-section-header eyebrow="Integrations" intro="The platforms MyRadar 360 supports today.">
-          <span id="int-title">Works with the platforms <span class="serif">you already use.</span></span>
+        <mr-section-header eyebrow="Intelligent Engagement" intro="Go beyond listening. Turn interactions into structured, trackable and outcome-driven work — one platform, multiple possibilities.">
+          <span id="eng-title">Beyond channels. <span class="serif">Towards intelligent engagement.</span></span>
         </mr-section-header>
-        <div mrReveal="60"><mr-integrations /></div>
+        <mr-capabilities [evolve]="false" />
+        <div class="eng-link" mrReveal><a class="text-link" routerLink="/engagement">Explore Intelligent Engagement <mr-icon name="arrow-right" [size]="16" /></a></div>
       </div>
     </section>
 
-    <!-- 5 · X Messaging (separate service) -->
-    <section class="section soft" id="x-messaging" aria-label="X Messaging service">
+    <!-- 5 · Platform in action -->
+    <section class="section soft" id="in-action" aria-labelledby="action-title">
       <div class="container">
-        <p class="eyebrow xm-eb" mrReveal>Also available</p>
-        <div mrReveal="60">@defer (on viewport; prefetch on idle) { <mr-x-messaging-teaser /> } @placeholder { <div class="ph ph-xm" aria-hidden="true"></div> }</div>
+        <mr-section-header eyebrow="Platform in action" intro="How the core services and Intelligent Engagement work together — shown in a real-world application.">
+          <span id="action-title">Real-world <span class="serif">applications.</span></span>
+        </mr-section-header>
+        <div mrReveal="60">@defer (on viewport; prefetch on idle) { <mr-engagement-teaser /> } @placeholder { <div class="ph ph-xm" aria-hidden="true"></div> }</div>
+        <h3 class="sub-h" mrReveal>How it works with your core services</h3>
+        <mr-connect-flow />
       </div>
     </section>
 
@@ -162,12 +162,6 @@ import { SERVICES, TOOLS, VALUE, WHY } from '../content/content';
     .vl:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
     .vl h3 { margin-bottom: 6px; }
     .vl p { font-size: .95rem; }
-    .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: clamp(32px, 4vw, 48px) 0 0; border-top: 1px solid var(--border); }
-    .stats div { padding: 24px 20px 0 0; display: flex; flex-direction: column-reverse; gap: 4px; }
-    .stats div + div { padding-left: 20px; border-left: 1px solid var(--border); }
-    .stats dd { margin: 0; font-size: clamp(2.4rem, 4.6vw, 3.8rem); font-weight: 800; letter-spacing: -.05em; line-height: 1; font-variant-numeric: tabular-nums;
-      background: linear-gradient(135deg, var(--accent-ink), var(--violet-ink)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .stats dt { font-size: .88rem; color: var(--fg-2); font-weight: 600; }
 
     .tools { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: clamp(24px, 3vw, 36px); padding: 18px 22px; border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--border); }
     .tools-h { font-size: .86rem; font-weight: 750; color: var(--fg); }
@@ -175,7 +169,8 @@ import { SERVICES, TOOLS, VALUE, WHY } from '../content/content';
     .tools li { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: var(--surface-2); font-size: .86rem; font-weight: 650; color: var(--fg); }
     .tools li mr-icon { color: var(--accent-ink); }
 
-    .xm-eb { margin-bottom: 16px; }
+    .eng-link { margin-top: 26px; }
+    .sub-h { margin: clamp(36px, 5vw, 56px) 0 18px; font-size: clamp(1.2rem, 2vw, 1.5rem); }
     .ph { border-radius: var(--radius-xl); }
     .ph-xm { min-height: 560px; } .ph-tl { min-height: 260px; }
 
@@ -194,17 +189,12 @@ import { SERVICES, TOOLS, VALUE, WHY } from '../content/content';
       .hero-grid { grid-template-columns: minmax(0, 1fr); }
       .hero-art { width: min(100%, 520px); margin-inline: auto; }
       .value { grid-template-columns: minmax(0, 1fr); }
-      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .stats div:nth-child(3) { padding-left: 0; border-left: 0; }
       .why-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 767px) { .why-radar { width: 520px; right: -280px; } .ph-xm { min-height: 900px; } }
     @media (max-width: 639px) { .why-list { grid-template-columns: minmax(0, 1fr); } }
     @media (max-width: 539px) {
       .hero-actions, .hero-actions .btn { width: 100%; }
-      .stats div { padding-right: 10px; }
-      .stats div + div { padding-left: 14px; }
-      .stats div:nth-child(3) { padding-left: 0; border-left: 0; }
       .tools { padding: 16px; display: grid; justify-items: start; }
       .hero-art { padding-top: 56px; }
     }
@@ -212,8 +202,6 @@ import { SERVICES, TOOLS, VALUE, WHY } from '../content/content';
 })
 export class HomePage {
   readonly services = SERVICES;
-  readonly socialCount = SERVICES.filter((s) => s.group === 'social').length;
-  readonly mediaCount = SERVICES.filter((s) => s.group === 'media').length;
   readonly value = VALUE;
   readonly tools = TOOLS;
   readonly why = WHY;

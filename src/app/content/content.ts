@@ -2,11 +2,15 @@
 // Website copy. Kept in one place so pages stay presentational
 // and wording can be edited without touching templates.
 //
-// Main story: the 10 core services — MyRadar 360 tracks what
-// people say across six social platforms and four news sources,
-// in one place, with sentiment, alerts and reports.
-// X Messaging (citizen/customer support tickets on X) is a
-// separate service with its own page (/x-messaging).
+// Main story: the core services — MyRadar 360 tracks what
+// people say across major platforms and news media, in one
+// place, with sentiment, alerts and reports.
+// Intelligent Engagement (/engagement) is the wider platform
+// capability: turning interactions into owned, tracked work.
+// Citizen support & ticketing on X is shown under "Platform in
+// Action" as one real-world application, not the main product.
+// Avoid claiming channels or integrations that are not built:
+// position the platform as configurable and extensible.
 // Writing style: short, simple, benefit-first.
 // =============================================================
 
@@ -37,7 +41,7 @@ export interface Service {
   detail: string;
 }
 
-/** The 10 core services: everything people say about you, tracked from one place. */
+/** The core services: everything people say about you, tracked from one place. */
 export const SERVICES: Service[] = [
   { id: 'x', group: 'social', name: 'X (Twitter)', short: 'X', brand: 'x', icon: 'at-sign', color: '#0f1419',
     text: 'See every post, reply and hashtag that mentions you.',
@@ -63,9 +67,6 @@ export const SERVICES: Service[] = [
   { id: 'epaper', group: 'media', name: 'Newspapers (e-paper)', short: 'E-papers', icon: 'newspaper', color: '#475569',
     text: 'See where you appear in daily newspapers.',
     detail: 'Daily print editions are checked for mentions of you, so nobody has to read every page.' },
-  { id: 'tv', group: 'media', name: 'TV news', short: 'TV', icon: 'tv', color: '#7C3AED',
-    text: 'Know when news channels cover you.',
-    detail: 'Follow news channel coverage of your brand, people and topics.' },
   { id: 'news-on-x', group: 'media', name: 'News on X', short: 'News on X', brand: 'x', icon: 'megaphone', color: '#0f1419',
     text: 'Follow what media houses post about you on X.',
     detail: 'Media houses often break news on X first. See their posts about you as they go live.' },
@@ -83,14 +84,14 @@ export const SOURCES: Source[] = SERVICES.map((x) => ({ name: x.name, icon: x.ic
 
 /** Why it helps (homepage value proposition). */
 export const VALUE = [
-  { icon: 'layers', title: 'Everything in one place', text: 'No more checking ten apps and websites. See it all on one screen.' },
+  { icon: 'layers', title: 'Everything in one place', text: 'No more checking app after app. See it all on one screen.' },
   { icon: 'bell-ring', title: 'Never miss what matters', text: 'Get an alert the moment a post, story or complaint needs you.' },
   { icon: 'smile', title: 'Know how people feel', text: 'See if people are happy, neutral or upset — and why.' },
 ];
 
-/** Tools that work across all 10 services. */
+/** Tools that work across every service. */
 export const TOOLS = [
-  { icon: 'radar', title: 'One feed', text: 'Every mention from all 10 services, in one place.' },
+  { icon: 'radar', title: 'One feed', text: 'Every mention from every service, in one place.' },
   { icon: 'smile', title: 'Sentiment', text: 'Know how people feel — in Hindi, Hinglish and regional languages too.' },
   { icon: 'trending-up', title: 'Trend alerts', text: 'Spot a story while it is still small.' },
   { icon: 'chart-column', title: 'Competitor view', text: 'Compare your share of the conversation with rivals.' },
@@ -133,7 +134,7 @@ export const STORY = [
   { key: 'reopened', icon: 'rotate-ccw', title: 'Reopened if needed', text: 'If supply stops again and the same person DMs, the old ticket reopens — no new ticket starts.' },
 ];
 
-/** X Messaging: what the support team gets. Ids are used for /x-messaging#id anchors and the product panels. */
+/** Citizen support on X (Platform in Action): what the support team gets. Ids are used for /engagement#id anchors and the product panels. */
 export const X_FEATURES: Feature[] = [
   {
     id: 'tickets',
@@ -218,7 +219,7 @@ export interface Industry {
 export const INDUSTRIES: Industry[] = [
   { id: 'brands', icon: 'shopping-bag', title: 'Brands & businesses', summary: 'Know what customers say about you, everywhere.',
     challenge: 'Feedback is spread across many apps and sites. Small problems grow before anyone notices.',
-    solution: 'All 10 services in one feed, with sentiment and instant alerts.',
+    solution: 'Every core service in one feed, with sentiment and instant alerts.',
     useCases: ['Brand reputation', 'Product launches', 'Customer complaints'] },
   { id: 'marketing', icon: 'megaphone', title: 'Marketing & PR teams', summary: 'Measure campaigns and respond fast.',
     challenge: 'You need to know what is said, by whom, and how far it is spreading.',
@@ -234,9 +235,9 @@ export const INDUSTRIES: Industry[] = [
     useCases: ['Client reports', 'Campaign insights', 'Pitch research'] },
   { id: 'government', icon: 'landmark', title: 'Government & public offices', summary: 'Hear citizens, and answer them on X.',
     challenge: 'Citizens raise issues on X and in the news. Many go untracked.',
-    solution: 'Follow public conversation, and turn complaints on X into tickets with X Messaging.',
+    solution: 'Follow public conversation, and turn complaints on X into tracked tickets with Intelligent Engagement.',
     useCases: ['Citizen complaints on X', 'Policy feedback', 'Regional sentiment'] },
-  { id: 'media', icon: 'tv', title: 'Media & entertainment', summary: 'See how audiences react.',
+  { id: 'media', icon: 'circle-play', title: 'Media & entertainment', summary: 'See how audiences react.',
     challenge: 'Buzz around releases and shows moves fast across platforms.',
     solution: 'See what audiences love, question and share — as it happens.',
     useCases: ['Release buzz', 'Audience feedback', 'Talent tracking'] },
@@ -244,22 +245,22 @@ export const INDUSTRIES: Industry[] = [
 
 /** Why MyRadar 360. */
 export const WHY = [
-  { icon: 'layers', title: '10 services, one dashboard', text: 'Social media, news sites, newspapers and TV — together.' },
+  { icon: 'layers', title: 'Every platform, one dashboard', text: 'Social media, news sites and newspapers — together.' },
   { icon: 'languages', title: 'Made for India', text: 'Understands Hindi, Hinglish and regional languages.' },
   { icon: 'bell-ring', title: 'Alerts in real time', text: 'Hear about issues early, not after they go viral.' },
   { icon: 'shield-check', title: 'Safe and official', text: 'Public content only, through official APIs and licensed providers.' },
   { icon: 'file-text', title: 'Reports anyone can read', text: 'Clear, simple reports for your whole team.' },
-  { icon: 'messages-square', title: 'Built-in X support desk', text: 'Turn complaints on X into tracked tickets with X Messaging.' },
+  { icon: 'workflow', title: 'Intelligent engagement', text: 'Turn conversations into owned, tracked actions — starting with X.' },
 ];
 
 export const PILLARS = [
-  { icon: 'radar', title: 'Listen', text: 'Follow all 10 services from one place.' },
+  { icon: 'radar', title: 'Listen', text: 'Follow every core service from one place.' },
   { icon: 'lightbulb', title: 'Understand', text: 'Turn thousands of mentions into a few clear insights.' },
   { icon: 'zap', title: 'Act', text: 'Respond early, brief your team, and answer people on X.' },
 ];
 
 export const OBJECTIVES = [
-  { title: 'Bring it together', text: 'Social media, news and TV, in one place.' },
+  { title: 'Bring it together', text: 'Social media and news, in one place.' },
   { title: 'Catch it early', text: 'Spot issues and chances before they make headlines.' },
   { title: 'Keep it simple', text: 'Plain-language insights anyone can use.' },
   { title: 'Help people act', text: 'Alerts, reports and replies on X, from one screen.' },
@@ -267,12 +268,38 @@ export const OBJECTIVES = [
 ];
 
 export const FAQ = [
-  { q: 'What does MyRadar 360 do?', a: 'It tracks what people say about you across 10 services — six social platforms and four news sources — and shows it all in one place, with alerts and reports.' },
-  { q: 'Which platforms are supported?', a: 'X (Twitter), YouTube, Instagram, Facebook, Reddit and LinkedIn, plus news websites, newspapers (e-paper), TV news and news on X.' },
+  { q: 'What does MyRadar 360 do?', a: 'It tracks what people say about you across major platforms and news media, and shows it all in one place, with alerts and reports.' },
+  { q: 'Which platforms are supported?', a: 'X (Twitter), YouTube, Instagram, Facebook, Reddit and LinkedIn, plus news websites, newspapers (e-paper) and news on X.' },
   { q: 'Do I need technical skills?', a: 'No. Our team helps you choose your keywords and platforms during setup.' },
   { q: 'Does it understand Indian languages?', a: 'Yes — Hindi, Hinglish and regional languages. Every sentiment result shows how confident it is.' },
-  { q: 'What is X Messaging?', a: 'A separate service that turns complaints and questions sent to your X handle into tracked tickets, with replies in 13 languages.' },
+  { q: 'What is Intelligent Engagement?', a: 'It turns interactions into structured, trackable work — with an owner, a deadline and a reply. Today it runs on X: mentions and DMs to your handle become tickets, with replies in 13 languages. New channels and workflows can be added, subject to implementation and integration.' },
   { q: 'How fast are alerts?', a: 'Alerts go out as soon as your conditions are met.' },
   { q: 'Is my data safe?', a: 'MyRadar 360 uses public content through official APIs and licensed providers. Each team gets its own workspace with role-based access.' },
   { q: 'How much does it cost?', a: 'It depends on the services and volume you need. Tell us your needs and we will send a proposal.' },
+];
+
+
+/** Intelligent Engagement: the wider platform capability (from the positioning brief). */
+export const CAPABILITIES = [
+  { icon: 'landmark', title: 'Citizen & public service engagement', text: 'Manage citizen requests, grievances, public queries and service delivery across digital channels, with accountability and transparency.' },
+  { icon: 'messages-square', title: 'Omnichannel customer experience', text: 'Bring conversations from social media, messaging, email and other touchpoints into one place to engage and resolve.' },
+  { icon: 'workflow', title: 'Enterprise workflow automation', text: 'Turn incoming requests into assigned tasks, automated workflows, escalations and measurable outcomes.' },
+  { icon: 'sparkles', title: 'AI-powered conversations', text: 'Multilingual communication, automatic acknowledgements and context-aware assistance.' },
+  { icon: 'gauge', title: 'Monitoring, analytics & accountability', text: 'See response times, resolution performance, service quality and bottlenecks at a glance.' },
+];
+
+/** How Intelligent Engagement works with the core services. Grounded in what exists today. */
+export const CONNECT = [
+  { icon: 'radar', title: 'Listen', text: 'Core services pick up mentions across major platforms and news media.' },
+  { icon: 'bell-ring', title: 'Spot', text: 'Sentiment and alerts flag the complaints and requests that need action.' },
+  { icon: 'ticket', title: 'Act', text: 'Raise a ticket from any post in the live feed. Mentions and DMs to your X handle become tickets automatically.' },
+  { icon: 'user-check', title: 'Resolve', text: 'Assign an owner, track the deadline and reply in the sender’s language.' },
+  { icon: 'chart-column', title: 'Measure', text: 'Response times, resolution and ratings — ready for your reports.' },
+];
+
+/** Platform in Action: real-world applications. */
+export const APPLICATIONS = [
+  { id: 'citizen-support', icon: 'landmark', title: 'Citizen Support & Grievance Management', status: 'Illustrative application',
+    text: 'Turn social media interactions into accountable service requests. Capture citizen complaints from X, create tickets automatically, assign responsible officers, track resolution timelines and share progress.',
+    example: 'Social media-based citizen support and ticketing on X.' },
 ];

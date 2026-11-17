@@ -6,7 +6,7 @@ export const SITE = {
   name: 'MyRadar 360',
   tagline: 'All your social media and news. One clear view.',
   description:
-    'MyRadar 360 tracks what people say about you on 10 platforms — X, YouTube, Instagram, Facebook, Reddit, LinkedIn, news sites, e-papers, TV and news on X — with alerts, sentiment and reports.',
+    'MyRadar 360 tracks what people say about you across major platforms and news media — with alerts, sentiment and reports — and helps you act on it with Intelligent Engagement.',
   /** Public URL of the site, used for canonical and Open Graph tags. */
   url: 'https://www.example.com',
   /** MyRadar 360 is a product of Inbox Media Pvt. Ltd. (details as on the Inbox Media website). */
@@ -39,7 +39,7 @@ export const SITE = {
 export const NAV_LINKS = [
   { label: 'Home', path: '/' },
   { label: 'Services', path: '/features' },
-  { label: 'X Messaging', path: '/x-messaging' },
+  { label: 'Engagement', path: '/engagement' },
   { label: 'Who it’s for', path: '/industries' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },

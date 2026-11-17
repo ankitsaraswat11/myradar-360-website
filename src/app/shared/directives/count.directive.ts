@@ -9,10 +9,13 @@ import { Directive, ElementRef, OnDestroy, afterNextRender, inject, input } from
 export class CountDirective implements OnDestroy {
   readonly mrCountTo = input.required<number>();
   readonly from = input(0);
-  readonly ms = input(1400);
+  readonly ms = input(1800);
+  /** Wait this long after the number comes into view (lets the section fade in first). */
+  readonly delay = input(250);
   private readonly el = inject(ElementRef<HTMLElement>);
   private io?: IntersectionObserver;
   private raf = 0;
+  private timer?: ReturnType<typeof setTimeout>;
 
   constructor() {
     afterNextRender(() => {
@@ -25,16 +28,21 @@ export class CountDirective implements OnDestroy {
         (es) => {
           if (!es.some((e) => e.isIntersecting)) return;
           this.io?.disconnect();
-          const t0 = performance.now();
-          const step = (t: number) => {
-            const k = Math.min(1, (t - t0) / this.ms());
-            const eased = 1 - Math.pow(1 - k, 4);
-            n.textContent = String(Math.round(this.from() + (to - this.from()) * eased));
-            if (k < 1) this.raf = requestAnimationFrame(step);
+          const start = () => {
+            const t0 = performance.now();
+            n.classList.add('counting');
+            const step = (t: number) => {
+              const k = Math.min(1, (t - t0) / this.ms());
+              const eased = 1 - Math.pow(1 - k, 3);
+              n.textContent = String(Math.round(this.from() + (to - this.from()) * eased));
+              if (k < 1) this.raf = requestAnimationFrame(step);
+              else { n.classList.remove('counting'); n.classList.add('counted'); }
+            };
+            this.raf = requestAnimationFrame(step);
           };
-          this.raf = requestAnimationFrame(step);
+          this.timer = setTimeout(start, this.delay());
         },
-        { threshold: 0.4 },
+        { threshold: 0.6 },
       );
       this.io.observe(n);
     });
@@ -43,5 +51,6 @@ export class CountDirective implements OnDestroy {
   ngOnDestroy(): void {
     this.io?.disconnect();
     cancelAnimationFrame(this.raf);
+    clearTimeout(this.timer);
   }
 }

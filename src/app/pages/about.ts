@@ -22,10 +22,10 @@ import { SITE } from '../core/site.config';
           <p class="eyebrow">Why we built it</p>
           <h2 id="intro-title">The conversation is everywhere. Teams aren’t.</h2>
           <p>
-            People talk about brands, leaders and public offices on many platforms — social media, news sites, newspapers and TV. Checking each one by hand is slow, and important posts get missed.
+            People talk about brands, leaders and public offices on many platforms — social media, news sites and newspapers. Checking each one by hand is slow, and important posts get missed.
           </p>
           <p>
-            MyRadar 360 brings 10 services into one dashboard, with alerts, sentiment and simple reports. And with X Messaging, messages sent to your X handle become tickets that get answered.
+            MyRadar 360 brings major platforms and news media into one dashboard, with alerts, sentiment and simple reports. And with Intelligent Engagement, conversations become owned, tracked work — starting with citizen support on X.
           </p>
           <p class="by">MyRadar 360 is built by <a [href]="site.company.url" target="_blank" rel="noopener">{{ site.company.name }}<span class="sr-only"> (opens in a new tab)</span></a>, Noida — serving enterprises since {{ site.company.since }}.</p>
         </div>
@@ -45,7 +45,7 @@ import { SITE } from '../core/site.config';
           <article class="card vm-card" mrReveal="100">
             <span class="icon-tile"><mr-icon name="target" [size]="22" /></span>
             <h3>Our mission</h3>
-            <p>Bring social media, news and TV into one simple view that anyone can use.</p>
+            <p>Bring social media and news into one simple view that anyone can use.</p>
           </article>
         </div>
       </div>

@@ -21,7 +21,7 @@ import { ScrollSteps } from '../interaction/scroll-steps';
     <div #scroller class="scroller" [class.on]="pinned()" [style.--n]="features.length">
     <div #pin class="pin">
     <div class="fs" [class.paused]="!running()" [class.pinned]="pinned()">
-      <ul class="list" aria-label="X Messaging features" (keydown)="tabKey($event)">
+      <ul class="list" aria-label="Citizen support features" (keydown)="tabKey($event)">
         @for (f of features; track f.id; let i = $index) {
           <li class="item" [class.on]="i === active()">
             <button type="button" class="tab" [id]="'fs-tab-' + f.id" [attr.aria-expanded]="i === active()" [attr.aria-controls]="'fs-more-' + f.id + ' fs-panel'"
@@ -32,7 +32,7 @@ import { ScrollSteps } from '../interaction/scroll-steps';
               @if (i === active() && (pinned() || auto.enabled)) { <span class="prog"></span> }
             </button>
             <div class="more" [id]="'fs-more-' + f.id" [attr.inert]="i === active() ? null : ''">
-              <div><p>{{ f.summary }}</p><a class="text-link" routerLink="/x-messaging" [fragment]="f.id">Learn more <mr-icon name="arrow-right" [size]="16" /></a></div>
+              <div><p>{{ f.summary }}</p><a class="text-link" routerLink="/engagement" [fragment]="f.id">Learn more <mr-icon name="arrow-right" [size]="16" /></a></div>
             </div>
           </li>
         }
@@ -41,7 +41,7 @@ import { ScrollSteps } from '../interaction/scroll-steps';
       <div class="stage">
         <div class="m-sum">
           <p><b>{{ current().title }}.</b> {{ current().summary }}</p>
-          <a class="text-link" routerLink="/x-messaging" [fragment]="current().id">Learn more <mr-icon name="arrow-right" [size]="16" /></a>
+          <a class="text-link" routerLink="/engagement" [fragment]="current().id">Learn more <mr-icon name="arrow-right" [size]="16" /></a>
         </div>
         <div #vp class="vp" id="fs-panel" role="group" aria-label="Feature preview — use the arrow keys or swipe" aria-roledescription="carousel"
              tabindex="0" (keydown)="stageKey($event)" [class.drag]="dragging()">

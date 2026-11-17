@@ -23,7 +23,7 @@ import { SITE } from '../core/site.config';
         <div class="top">
           <div class="about">
             <mr-logo />
-            <p>Track social media, news and TV in one place — with alerts, sentiment and simple reports.</p>
+            <p>Track social media and news in one place — with alerts, sentiment and simple reports.</p>
             <a class="mail" [href]="'mailto:' + site.contact.email"><mr-icon name="mail" [size]="18" />{{ site.contact.email }}</a>
             <address><mr-icon name="map-pin" [size]="18" /><span>@for (l of site.contact.addressLines; track l; let last = $last) { {{ l }}@if (!last) {, } }</span></address>
             <p class="by">A product of <a [href]="site.company.url" target="_blank" rel="noopener">{{ site.company.name }}<span class="sr-only"> (opens in a new tab)</span></a></p>
@@ -31,7 +31,7 @@ import { SITE } from '../core/site.config';
           <nav aria-label="Services">
             <h2>Services</h2>
             @for (s of services; track s.id) { <a routerLink="/features" [fragment]="s.id">{{ s.name }}</a> }
-            <a class="xm" routerLink="/x-messaging">X Messaging <span>Add-on</span></a>
+            <a class="xm" routerLink="/engagement">Intelligent Engagement <span>Platform</span></a>
           </nav>
           <nav aria-label="Industries">
             <h2>Who it’s for</h2>
@@ -48,7 +48,7 @@ import { SITE } from '../core/site.config';
         <div class="bottom">
           <p>© {{ site.year }} {{ site.name }} · {{ site.company.name }} All rights reserved.</p>
           <p class="social">@for (x of site.social; track x.label) { <a [href]="x.url" target="_blank" rel="noopener">{{ x.label }}<span class="sr-only"> (opens in a new tab)</span></a> }</p>
-          <p class="badges"><span>10 core services</span><span>Official APIs</span><span>Made for India</span></p>
+          <p class="badges"><span>Major platforms</span><span>Official APIs</span><span>Made for India</span></p>
         </div>
       </div>
     </footer>

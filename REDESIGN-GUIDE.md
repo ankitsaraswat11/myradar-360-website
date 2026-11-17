@@ -6,6 +6,14 @@ A presentation-layer redesign. Routes, page copy (`content/content.ts`), the con
 
 Interaction quality and motion language were modelled on the Inbox Media reference source (token-driven theming, a pre-paint theme script, IntersectionObserver reveals, a pointer-drag carousel, flowing SVG beams around a hub). Its code, colours, copy and branding were **not** reused. Every visual here is original to MyRadar 360.
 
+## Final positioning (November 2026)
+
+- TV is not offered: the TV news service and all TV wording were removed (9 core services: 6 major platforms + 3 news & media).
+- Brand name in the logo is written **MYRADAR 360** (no space); `logo-full.png` and `og-image.png` were updated to match.
+- No count stats or service numbering anywhere in the core services; groups are **Major platforms** and **News & Media**.
+- **Intelligent Engagement** replaces “X Messaging” as the name. Page `/engagement`: hero “Beyond channels. Towards intelligent engagement.”, five capability cards + “your next use case”, “Designed to evolve”, how it works with the core services (Listen → Spot → Act → Resolve → Measure), then **Platform in action — Real-world applications** with the citizen support on X application and all its detail.
+- Copy for these lives in `CAPABILITIES`, `CONNECT` and `APPLICATIONS` in `content.ts`.
+
 ## Restructure (services first)
 
 - The **10 core services** are now the main story. They live in `SERVICES` in `content.ts` (id, name, short label, group, brand logo key, colour, one-line text, short detail).

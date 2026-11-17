@@ -30,7 +30,7 @@ function beam(x: number, y: number): string {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="hv" [class.paused]="paused()" role="img"
-         aria-label="Illustration: X, YouTube, Instagram, Facebook, Reddit, LinkedIn, online news, e-papers, television and news on X flowing into a single MyRadar 360 view, with sample insight cards for an emerging topic, sentiment and an alert">
+         aria-label="Illustration: X, YouTube, Instagram, Facebook, Reddit, LinkedIn, online news, e-papers and news on X flowing into a single MyRadar 360 view, with sample insight cards for an emerging topic, sentiment and an alert">
       <div class="layer" aria-hidden="true">
         <svg class="base" viewBox="0 0 600 600">
           <defs>
