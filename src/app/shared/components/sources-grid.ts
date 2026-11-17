@@ -31,7 +31,7 @@ import { CountDirective } from '../directives/count.directive';
         </section>
       }
     </div>
-    <p class="note"><mr-icon name="shield-check" [size]="16" />Public content only, connected through official APIs and licensed data providers. The sources for your workspace are agreed during setup.</p>
+    <p class="note"><mr-icon name="shield-check" [size]="16" />Public content only, via official APIs and licensed providers.</p>
   `,
   styles: `
     .groups { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 2vw, 24px); }
@@ -58,7 +58,7 @@ import { CountDirective } from '../directives/count.directive';
 })
 export class SourcesGridComponent {
   readonly groups = [
-    { key: 'social', title: 'Social media monitoring', text: 'Six platforms where conversations start and spread.', items: SOURCES.filter((s) => s.group === 'social') },
-    { key: 'media', title: 'Media monitoring', text: 'Four streams where stories are reported.', items: SOURCES.filter((s) => s.group === 'media') },
+    { key: 'social', title: 'Social media monitoring', text: 'Where conversations start and spread.', items: SOURCES.filter((s) => s.group === 'social') },
+    { key: 'media', title: 'Media monitoring', text: 'Where stories get reported.', items: SOURCES.filter((s) => s.group === 'media') },
   ];
 }

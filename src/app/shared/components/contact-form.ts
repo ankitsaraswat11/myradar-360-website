@@ -13,7 +13,7 @@ import { IconComponent } from './icon';
       <div class="done" role="status" aria-live="polite">
         <span class="ok"><mr-icon name="circle-check" [size]="28" /></span>
         <h3>Thank you, {{ sentName() }}.</h3>
-        <p>Your message has been received. Our team will get back to you within one to two business days.</p>
+        <p>Message received. We’ll reply within 1–2 business days.</p>
         @if (contact.isDemo) { <p class="note">Demo mode: no contact endpoint is configured yet, so this message was not sent anywhere.</p> }
         <button type="button" class="btn btn-secondary btn-sm" (click)="reset()">Send another message</button>
       </div>
@@ -32,13 +32,13 @@ import { IconComponent } from './icon';
           </div>
         </div>
         <div class="field">
-          <label [for]="id + '-company'">Company / organisation <span aria-hidden="true">*</span></label>
+          <label [for]="id + '-company'">Office / organisation <span aria-hidden="true">*</span></label>
           <input [id]="id + '-company'" type="text" formControlName="company" autocomplete="organization" [attr.aria-invalid]="bad('company')" [attr.aria-describedby]="bad('company') ? id + '-company-err' : null" />
           @if (bad('company')) { <span class="err" [id]="id + '-company-err'">Please enter your company or organisation.</span> }
         </div>
         <div class="field">
           <label [for]="id + '-message'">How can we help? <span aria-hidden="true">*</span></label>
-          <textarea [id]="id + '-message'" rows="5" formControlName="message" maxlength="1500" [attr.aria-invalid]="bad('message')" [attr.aria-describedby]="bad('message') ? id + '-message-err' : null" placeholder="Tell us what you would like to monitor and who will use MyRadar 360."></textarea>
+          <textarea [id]="id + '-message'" rows="5" formControlName="message" maxlength="1500" [attr.aria-invalid]="bad('message')" [attr.aria-describedby]="bad('message') ? id + '-message-err' : null" placeholder="Tell us your X handle and how complaints reach your office today."></textarea>
           @if (bad('message')) { <span class="err" [id]="id + '-message-err'">Please write a short message (at least 10 characters).</span> }
         </div>
         @if (status() === 'error') { <p class="err" role="alert">Something went wrong while sending your message. Please try again or email {{ site.contact.email }}.</p> }

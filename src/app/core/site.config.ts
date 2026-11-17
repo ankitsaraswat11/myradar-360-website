@@ -4,17 +4,29 @@
  */
 export const SITE = {
   name: 'MyRadar 360',
-  tagline: 'See beyond the noise. Understand the signals.',
+  tagline: 'Every complaint on X. Tracked, answered, closed.',
   description:
-    'MyRadar 360 is a social and media intelligence platform that brings news, social platforms and online conversation into one clear view — with sentiment, trends and real-time alerts.',
+    'MyRadar 360 turns citizen complaints on X into tickets — with an owner, a deadline and a reply sent back on X, in the citizen’s language.',
   /** Public URL of the site, used for canonical and Open Graph tags. */
   url: 'https://www.example.com',
-  contact: {
-    email: 'hello@example.com',
-    sales: 'sales@example.com',
-    location: 'India',
-    hours: 'Monday – Friday, 10:00 – 18:00 IST',
+  /** MyRadar 360 is a product of Inbox Media Pvt. Ltd. (details as on the Inbox Media website). */
+  company: {
+    name: 'Inbox Media Pvt. Ltd.',
+    url: 'https://inboxmediaweb.vercel.app/',
+    since: 2009,
   },
+  contact: {
+    email: 'info@inboxmedia.in',
+    addressLines: ['619-620, Tower B, 6th Floor', 'Noida One, Sector 62', 'Noida, Uttar Pradesh 201309', 'India'],
+    mapUrl: 'https://www.google.com/maps/search/?api=1&query=Noida+One+Tower+B+Sector+62+Noida+Uttar+Pradesh+201309',
+  },
+  social: [
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/company/inbox-media-private-limited/' },
+    { label: 'X', url: 'https://x.com/inboxmedia_in' },
+    { label: 'Facebook', url: 'https://www.facebook.com/Inboxmedia.in' },
+    { label: 'Instagram', url: 'https://www.instagram.com/inboxmedia_in' },
+  ],
+
   /**
    * Endpoint that receives contact-form submissions (JSON POST).
    * Leave empty to run in demo mode: the form validates and shows a
@@ -27,7 +39,7 @@ export const SITE = {
 export const NAV_LINKS = [
   { label: 'Home', path: '/' },
   { label: 'Features', path: '/features' },
-  { label: 'Industries', path: '/industries' },
+  { label: 'Who it’s for', path: '/industries' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
 ] as const;

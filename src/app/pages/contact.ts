@@ -13,7 +13,7 @@ import { SITE } from '../core/site.config';
   imports: [IconComponent, PageHeroComponent, SectionHeaderComponent, ContactFormComponent, FaqComponent, RevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <mr-page-hero eyebrow="Contact us" intro="Questions, demos or partnership ideas — send us a message and the right person from our team will reply.">
+    <mr-page-hero eyebrow="Contact us" intro="Want to see your X handle as a ticket desk? Send a message — the right person will reply.">
       We would love to <span class="serif">hear from you.</span>
     </mr-page-hero>
 
@@ -30,16 +30,19 @@ import { SITE } from '../core/site.config';
               <div><h3>Email</h3><a [href]="'mailto:' + site.contact.email">{{ site.contact.email }}</a></div>
             </div>
             <div class="info">
-              <span class="icon-tile"><mr-icon name="briefcase" [size]="20" /></span>
-              <div><h3>Sales & partnerships</h3><a [href]="'mailto:' + site.contact.sales">{{ site.contact.sales }}</a></div>
-            </div>
-            <div class="info">
               <span class="icon-tile"><mr-icon name="map-pin" [size]="20" /></span>
-              <div><h3>Location</h3><p>{{ site.contact.location }}</p></div>
+              <div><h3>Office</h3>
+                <address>@for (l of site.contact.addressLines; track l) { {{ l }}<br /> }</address>
+                <a class="sm" [href]="site.contact.mapUrl" target="_blank" rel="noopener">Open in Google Maps <span class="sr-only">(opens in a new tab)</span></a></div>
             </div>
             <div class="info">
-              <span class="icon-tile"><mr-icon name="clock" [size]="20" /></span>
-              <div><h3>Business hours</h3><p>{{ site.contact.hours }}</p></div>
+              <span class="icon-tile"><mr-icon name="building-2" [size]="20" /></span>
+              <div><h3>Company</h3><p>MyRadar 360 is a product of <a [href]="site.company.url" target="_blank" rel="noopener">{{ site.company.name }}<span class="sr-only"> (opens in a new tab)</span></a>, serving enterprises since {{ site.company.since }}.</p></div>
+            </div>
+            <div class="info">
+              <span class="icon-tile"><mr-icon name="users" [size]="20" /></span>
+              <div><h3>Follow us</h3>
+                <p class="soc">@for (x of site.social; track x.label) { <a [href]="x.url" target="_blank" rel="noopener">{{ x.label }}<span class="sr-only"> (opens in a new tab)</span></a> }</p></div>
             </div>
           </div>
           <div class="next inverse">
@@ -71,6 +74,9 @@ import { SITE } from '../core/site.config';
     .info h3 { font-size: .95rem; margin-bottom: 2px; }
     .info a, .info p { font-size: .95rem; overflow-wrap: anywhere; }
     .info a { font-weight: 700; }
+    address { font-style: normal; color: var(--fg-2); font-size: .95rem; line-height: 1.6; }
+    .sm { display: inline-block; margin-top: 4px; font-size: .86rem; }
+    .soc { display: flex; flex-wrap: wrap; gap: 6px 14px; }
     .next { padding: 26px; border-radius: var(--radius-lg); border: 1px solid var(--border);
       background: radial-gradient(80% 80% at 100% 0%, rgba(72, 224, 193, .16), transparent 60%), #070d17; }
     .next h3 { font-size: 1.05rem; margin-bottom: 16px; }

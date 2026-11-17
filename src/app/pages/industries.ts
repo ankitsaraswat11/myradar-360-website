@@ -12,13 +12,13 @@ const HUES = [168, 250, 190, 270, 205, 150];
   imports: [IconComponent, PageHeroComponent, CtaBandComponent, RevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <mr-page-hero eyebrow="Industries" intro="Every sector has its own conversations, risks and opportunities. MyRadar 360 adapts to the questions your team needs answered.">
-      Real-world intelligence for <span class="serif">every sector.</span>
+    <mr-page-hero eyebrow="Who it’s for" intro="District offices, municipal corporations, police, utilities, health departments — and brands. Anyone whose public reaches out on X.">
+      For every office citizens <span class="serif">reach on X.</span>
     </mr-page-hero>
 
     <section class="section">
       <div class="container">
-        <nav class="chips-nav" aria-label="Industries on this page" mrReveal>
+        <nav class="chips-nav" aria-label="Teams on this page" mrReveal>
           @for (ind of industries; track ind.id) { <a class="chip" [href]="'#' + ind.id" (click)="go($event, ind.id)"><mr-icon [name]="ind.icon" [size]="16" />{{ ind.title }}</a> }
         </nav>
         <div class="list">
@@ -42,7 +42,7 @@ const HUES = [168, 250, 190, 270, 205, 150];
       </div>
     </section>
 
-    <mr-cta-band title="Not sure if MyRadar 360 fits your sector?" text="Tell us about your goals and we will show you how teams like yours use it." />
+    <mr-cta-band title="Not sure it fits your office?" text="Tell us how complaints reach you today. We’ll show you how it works on your handle." />
   `,
   styles: `
     .chips-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: clamp(32px, 4vw, 48px); }

@@ -1,6 +1,12 @@
 // =============================================================
 // Website copy. Kept in one place so pages stay presentational
 // and wording can be edited without touching templates.
+//
+// Storyline: Citizen Support on X. Citizens raise complaints by
+// tagging a government office's handle on X or sending it a DM.
+// MyRadar 360 turns each one into a ticket with an owner, a
+// deadline and a reply sent back on X. Monitoring across ten
+// sources is the supporting capability.
 // =============================================================
 
 export interface Feature {
@@ -21,87 +27,128 @@ export interface Source {
 
 /** Sources MyRadar 360 monitors: six social platforms and four media streams. */
 export const SOURCES: Source[] = [
-  { group: 'social', name: 'X (Twitter)', icon: 'at-sign', detail: 'Posts, replies and trending hashtags' },
-  { group: 'social', name: 'YouTube', icon: 'circle-play', detail: 'Videos, titles and comments' },
-  { group: 'social', name: 'Instagram', icon: 'camera', detail: 'Public posts, reels and comments' },
-  { group: 'social', name: 'Facebook', icon: 'users', detail: 'Public pages, posts and comments' },
-  { group: 'social', name: 'Reddit', icon: 'messages-square', detail: 'Communities and discussion threads' },
-  { group: 'social', name: 'LinkedIn', icon: 'briefcase', detail: 'Company and professional updates' },
-  { group: 'media', name: 'News (web)', icon: 'globe', detail: 'Online news sites and portals' },
-  { group: 'media', name: 'Newspapers (e-paper)', icon: 'newspaper', detail: 'Daily print editions, digitised' },
+  { group: 'social', name: 'X (Twitter)', icon: 'at-sign', detail: 'Posts, replies, hashtags' },
+  { group: 'social', name: 'YouTube', icon: 'circle-play', detail: 'Videos and comments' },
+  { group: 'social', name: 'Instagram', icon: 'camera', detail: 'Posts, reels, comments' },
+  { group: 'social', name: 'Facebook', icon: 'users', detail: 'Pages, posts, comments' },
+  { group: 'social', name: 'Reddit', icon: 'messages-square', detail: 'Communities and threads' },
+  { group: 'social', name: 'LinkedIn', icon: 'briefcase', detail: 'Company and leader posts' },
+  { group: 'media', name: 'News (web)', icon: 'globe', detail: 'News sites and portals' },
+  { group: 'media', name: 'Newspapers (e-paper)', icon: 'newspaper', detail: 'Daily print editions' },
   { group: 'media', name: 'Television', icon: 'tv', detail: 'News channel coverage' },
-  { group: 'media', name: 'News on X', icon: 'megaphone', detail: 'Media-house handles on X' },
+  { group: 'media', name: 'News on X', icon: 'megaphone', detail: 'Media houses on X' },
 ];
 
+/** The problem, in the citizen's and the office's words. */
+export const PROBLEMS = [
+  { icon: 'inbox', title: 'Nobody tracks them', text: 'Mentions and DMs pile up on the handle. Most are never logged.' },
+  { icon: 'user-check', title: 'Nobody owns them', text: 'No one is assigned, so no one follows up.' },
+  { icon: 'ban', title: 'Nobody replies', text: 'The citizen hears nothing back and tags again — louder.' },
+  { icon: 'file-text', title: 'Nothing to show', text: 'The office cannot prove what it handled, or how fast.' },
+];
+
+/** The three ways a message on X becomes a ticket. */
+export const ENTRY_POINTS = [
+  { icon: 'at-sign', title: 'Mention', when: 'Someone tags your handle with a complaint or query.', reply: 'Public reply with their ticket number.' },
+  { icon: 'mail', title: 'Direct message', when: 'Every DM to your handle.', reply: 'DM reply with their ticket number.' },
+  { icon: 'rss', title: 'Feed post', when: 'Your team raises a ticket from a post in the live feed.', reply: 'The citizen is asked by DM to share details.' },
+];
+
+/** Languages: 13 supported. These seven are named in the product brief. */
+export const LANGUAGES = { count: 13, named: ['Hindi', 'Romanised Hindi', 'Marathi', 'Bengali', 'Tamil', 'Telugu', 'Urdu'] };
+
+/** Default ticket topics named in the brief (plus 9 more). */
+export const TOPICS = { named: ['Water', 'Power', 'Roads', 'Health', 'Police & Safety'], more: 9 };
+
+/** Default SLA targets. */
+export const SLA = { firstResponse: '60 min', resolution: '48 hours' };
+
+/** One complaint, start to finish (sample: Ward 14 water supply). */
+export const STORY = [
+  { key: 'raised', icon: 'at-sign', title: 'Raised', text: 'A resident tags the district office’s support handle: no water in Ward 14 for 4 days. The post is in Hindi.' },
+  { key: 'ack', icon: 'zap', title: 'Acknowledged in seconds', text: 'A ticket is created — priority High, topic Water. A public reply in Hindi shares the ticket number and asks for details by DM.' },
+  { key: 'dm', icon: 'mail', title: 'Details by DM', text: 'The resident sends name, location and a photo by DM. It joins the same ticket thread.' },
+  { key: 'assigned', icon: 'user-check', title: 'Assigned', text: 'The supervisor assigns the water desk officer. The SLA clock shows time left to respond and to resolve.' },
+  { key: 'update', icon: 'reply', title: 'Updates sent', text: 'The officer replies by DM from the ticket screen, using a saved reply where it fits.' },
+  { key: 'resolved', icon: 'star', title: 'Resolved and rated', text: 'The ticket is marked Resolved. A DM asks for a 1 to 5 rating. The resident replies 5, and the score is saved.' },
+  { key: 'reopened', icon: 'rotate-ccw', title: 'Reopened if needed', text: 'If supply stops again and the same person DMs, the old ticket reopens — no new ticket starts.' },
+];
+
+/** What the support team gets. Ids are used for /features#id anchors and the product panels. */
 export const FEATURES: Feature[] = [
   {
-    id: 'monitoring',
-    icon: 'radar',
-    title: 'Unified monitoring',
-    summary: 'X, YouTube, Instagram, Facebook, Reddit, LinkedIn, news sites, e-papers and TV — gathered into one searchable stream.',
-    detail:
-      'Stop switching between tabs and tools. MyRadar 360 collects public conversation from the sources your organisation cares about and organises it around your brands, people, products and keywords.',
-    points: ['One feed across six social platforms and four media streams', 'Keyword, hashtag and Boolean search', 'Filters by source, language, region and sentiment'],
+    id: 'tickets',
+    icon: 'ticket',
+    title: 'One ticket list',
+    summary: 'Mentions, DMs and feed posts — in one list.',
+    detail: 'Every message that needs action lands in one place. Filter by platform, status, priority, topic and assignee.',
+    points: ['Mentions, DMs and feed posts together', 'Filter by status, priority and topic', 'See who owns what'],
   },
   {
-    id: 'sentiment',
-    icon: 'smile',
-    title: 'Sentiment & emotion',
-    summary: 'Understand how people feel — including Hindi, regional languages and code-mixed text.',
-    detail:
-      'Every mention is analysed for tone and emotion, so you can see whether conversation is turning positive or negative and why. Each result carries a confidence score, because language is nuanced and teams deserve transparency.',
-    points: ['Positive, neutral and negative classification', 'Built for India’s multilingual, code-mixed internet', 'Themes that explain the “why” behind the numbers'],
+    id: 'conversation',
+    icon: 'messages-square',
+    title: 'Conversation on X',
+    summary: 'The full thread on one screen. Reply without leaving it.',
+    detail: 'See the citizen’s post, their DMs and every reply in one thread. Answer by DM or as a public reply.',
+    points: ['Full thread on the ticket screen', 'Reply by DM or publicly', 'Photos and details stay with the ticket'],
   },
   {
-    id: 'trends',
-    icon: 'trending-up',
-    title: 'Trend & spike detection',
-    summary: 'Spot emerging topics early by measuring how fast a conversation is growing.',
-    detail:
-      'MyRadar 360 compares current activity against a rolling baseline for each topic. When a conversation accelerates unusually, it is surfaced with the evidence behind it — volume, speed and who is driving it.',
-    points: ['Velocity-based early warnings', 'Topic clustering into clear narratives', 'Transparent signals, not black-box scores'],
+    id: 'replies',
+    icon: 'copy',
+    title: 'Saved replies',
+    summary: 'Ready answers for common cases. One click to send.',
+    detail: 'Keep approved answers for the questions you get every day, so officers reply fast and consistently.',
+    points: ['One-click answers', 'Consistent, approved wording', 'Faster first response'],
   },
   {
-    id: 'competitors',
-    icon: 'chart-column',
-    title: 'Competitive benchmarking',
-    summary: 'Compare share of voice, sentiment and engagement with the brands you compete with.',
-    detail:
-      'See where you stand in the conversation. Track competitors side by side and understand which topics, channels and audiences are moving in their favour — or yours.',
-    points: ['Share of voice over time', 'Sentiment and engagement comparison', 'Channel-by-channel breakdown'],
+    id: 'topics',
+    icon: 'tag',
+    title: 'Auto topic',
+    summary: 'Every ticket tagged by topic, automatically.',
+    detail: 'Tickets are tagged Water, Power, Roads, Health, Police & Safety and 9 more — so they reach the right desk.',
+    points: ['14 topics out of the box', 'Routes tickets to the right desk', 'Reports by topic'],
   },
   {
-    id: 'alerts',
-    icon: 'bell-ring',
-    title: 'Real-time alerts',
-    summary: 'Get notified the moment something important happens — without watching a screen all day.',
-    detail:
-      'Set the conditions that matter to you, such as a surge in negative mentions or coverage from a major outlet. Alerts reach the right people through the channels they already use.',
-    points: ['Custom thresholds and quiet hours', 'Email, in-app and messaging channels', 'Severity levels for clear prioritisation'],
+    id: 'sla',
+    icon: 'timer',
+    title: 'SLA tracking',
+    summary: 'A clock on every ticket.',
+    detail: 'Default targets: first response in 60 minutes, resolution in 48 hours. See time left at a glance.',
+    points: ['First response: 60 min', 'Resolution: 48 hours', 'Time left shown on every ticket'],
   },
   {
-    id: 'reports',
-    icon: 'file-text',
-    title: 'Executive reporting',
-    summary: 'Clear, scheduled reports that leadership can read in minutes.',
-    detail:
-      'Turn monitoring into decisions. Build reports from ready templates, add an AI-assisted summary, and schedule delivery daily, weekly or monthly — with every figure traceable to its source.',
-    points: ['Ready-made report templates', 'Scheduled delivery to stakeholders', 'Export to PDF and CSV'],
+    id: 'rating',
+    icon: 'star',
+    title: 'Citizen rating',
+    summary: 'Hear back from every citizen you help.',
+    detail: 'After a ticket is resolved, the citizen gets a DM asking for a 1 to 5 rating. The score is saved on the ticket.',
+    points: ['Asked by DM after resolution', '1 to 5 score on every ticket', 'Ratings ready for reports'],
   },
 ];
 
+/** Built-in guardrails. */
+export const GUARDRAILS = [
+  { icon: 'filter', title: 'No noise', text: 'A mention becomes a ticket only if it is a complaint or a query. Greetings and praise are skipped.' },
+  { icon: 'layers', title: 'No duplicates', text: 'The same post never creates two tickets — even if it arrives as a mention and from the feed.' },
+  { icon: 'shield-check', title: 'Follows X’s rules', text: 'Public replies go only to people who tagged your handle. Everyone else is contacted by DM.' },
+  { icon: 'wallet', title: 'Controlled cost', text: 'Daily caps limit automatic replies and mention tickets.' },
+  { icon: 'file-text', title: 'Proof of work', text: 'Every ticket keeps first response time, resolution time, reopen count and citizen rating — ready for reports.' },
+];
+
+/** Monitoring: the supporting capability (shown on Features and Home). */
 export const PLATFORM_EXTRAS = [
-  { icon: 'users', title: 'Influence mapping', text: 'Identify the accounts and outlets that amplify a conversation, based on public reach and engagement.' },
-  { icon: 'globe', title: 'Geographic view', text: 'See where conversation is coming from and how sentiment differs across regions.' },
-  { icon: 'shield-check', title: 'Secure workspaces', text: 'Each project is isolated, with role-based access for every team member.' },
-  { icon: 'plug', title: 'Official integrations', text: 'Connects through authorised APIs and licensed data providers — never scraping.' },
+  { icon: 'radar', title: 'Live feed of 10 sources', text: 'X, YouTube, Instagram, Facebook, Reddit, LinkedIn, news, e-papers, TV and news on X.' },
+  { icon: 'smile', title: 'Sentiment', text: 'See how people feel — in Hindi, Hinglish and regional languages too.' },
+  { icon: 'trending-up', title: 'Spike alerts', text: 'Know when complaints on a topic start to surge.' },
+  { icon: 'file-text', title: 'Reports', text: 'Response times, ratings and topics — ready for review meetings.' },
 ];
 
+/** Getting started. */
 export const STEPS = [
-  { icon: 'sliders-horizontal', title: 'Set up your radar', text: 'Tell us what to watch — brands, people, products, competitors, keywords and regions.' },
-  { icon: 'layers', title: 'Collect from every source', text: 'Mentions from news, social platforms and forums flow into a single, organised view.' },
-  { icon: 'sparkles', title: 'Understand with AI', text: 'Sentiment, topics and trends are analysed automatically, with clear explanations.' },
-  { icon: 'send', title: 'Act with confidence', text: 'Alerts and reports put the right insight in front of the right people, on time.' },
+  { icon: 'plug', title: 'Connect your handle', text: 'Link your office’s X support handle to MyRadar 360. Once.' },
+  { icon: 'ticket', title: 'Messages become tickets', text: 'Complaints, queries and DMs are logged and acknowledged automatically.' },
+  { icon: 'user-check', title: 'Assign and reply', text: 'Route to the right officer. Reply on X from the ticket screen.' },
+  { icon: 'circle-check', title: 'Resolve and report', text: 'Close the loop, collect a rating, show your numbers.' },
 ];
 
 export interface Industry {
@@ -114,88 +161,93 @@ export interface Industry {
   useCases: string[];
 }
 
+/** Who it is for. */
 export const INDUSTRIES: Industry[] = [
+  {
+    id: 'district',
+    icon: 'landmark',
+    title: 'District & state offices',
+    summary: 'One desk for every complaint tagged to your office.',
+    challenge: 'Water, power and road complaints all arrive on one handle. Nobody tracks them.',
+    solution: 'Each one becomes a ticket, tagged by topic and routed to the right desk — with a reply on X.',
+    useCases: ['Public grievance desk', 'Department-wise routing', 'Response-time reports'],
+  },
+  {
+    id: 'municipal',
+    icon: 'building-2',
+    title: 'Municipal corporations',
+    summary: 'Ward-level complaints, answered and closed.',
+    challenge: 'Residents tag the corporation about water, roads and services. Follow-ups get lost.',
+    solution: 'Tickets keep the full thread, the owner and the SLA clock — and reopen if the issue returns.',
+    useCases: ['Water and road complaints', 'Ward-level follow-up', 'Citizen ratings'],
+  },
+  {
+    id: 'police',
+    icon: 'siren',
+    title: 'Police & public safety',
+    summary: 'Respond to safety concerns raised on X.',
+    challenge: 'Safety complaints on X need a fast, careful response — and a record of it.',
+    solution: 'Tickets are tagged Police & Safety, acknowledged fast, and handled by DM where needed.',
+    useCases: ['Safety complaints on X', 'DM-first replies', 'Response-time records'],
+  },
+  {
+    id: 'utilities',
+    icon: 'droplet',
+    title: 'Water & power utilities',
+    summary: 'Supply complaints, acknowledged in seconds.',
+    challenge: 'An outage brings a wave of posts. The same people complain again when it returns.',
+    solution: 'One ticket per complaint, no duplicates, and the old ticket reopens if the problem comes back.',
+    useCases: ['Outage complaints', 'Reopen tracking', 'SLA reports'],
+  },
+  {
+    id: 'health',
+    icon: 'hospital',
+    title: 'Health departments',
+    summary: 'Service complaints, routed to the right desk.',
+    challenge: 'Queries about hospitals and services reach the main handle, not the right team.',
+    solution: 'Auto topic tags them Health and routes them, with replies in the citizen’s language.',
+    useCases: ['Hospital and service complaints', 'Queries routed by topic', 'Feedback by rating'],
+  },
   {
     id: 'brands',
     icon: 'shopping-bag',
     title: 'Brands & enterprises',
-    summary: 'Protect reputation and understand customers at scale.',
-    challenge: 'Customer feedback is scattered across reviews, social posts and news coverage, and small issues can grow before anyone notices.',
-    solution: 'MyRadar 360 gives brand and marketing teams one view of what customers say, how they feel and which issues are gaining momentum.',
-    useCases: ['Product launch tracking', 'Customer complaint early warning', 'Competitor and campaign benchmarking'],
-  },
-  {
-    id: 'pr',
-    icon: 'megaphone',
-    title: 'PR & communications',
-    summary: 'Respond faster with full context.',
-    challenge: 'Communications teams need to know what is being said, by whom and how far it is travelling — often within minutes.',
-    solution: 'Real-time alerts, influence mapping and media coverage timelines help PR teams prioritise and respond with facts.',
-    useCases: ['Crisis detection and response', 'Media coverage reporting', 'Journalist and influencer tracking'],
-  },
-  {
-    id: 'bfsi',
-    icon: 'banknote',
-    title: 'Banking & financial services',
-    summary: 'Watch for service issues, fraud chatter and trust signals.',
-    challenge: 'Outages, payment failures and phishing scams spread quickly online and directly affect customer trust.',
-    solution: 'Spike detection highlights unusual surges in complaints so operations and communications teams can act early.',
-    useCases: ['App and payment issue detection', 'Phishing and scam awareness', 'Regulatory and policy conversation tracking'],
-  },
-  {
-    id: 'public',
-    icon: 'landmark',
-    title: 'Public affairs & institutions',
-    summary: 'Understand public sentiment on policies and programmes.',
-    challenge: 'Public bodies and policy teams need an accurate, unbiased picture of how citizens respond to announcements and services.',
-    solution: 'Topic and regional analysis show which issues matter most to people and where — helping teams communicate clearly. Use is subject to applicable laws and platform policies.',
-    useCases: ['Policy announcement feedback', 'Regional sentiment analysis', 'Public service issue monitoring'],
-  },
-  {
-    id: 'media',
-    icon: 'tv',
-    title: 'Media & entertainment',
-    summary: 'Measure audience reaction to content and talent.',
-    challenge: 'Audience conversation around releases, shows and personalities moves fast and across many platforms.',
-    solution: 'Trend tracking and sentiment analysis reveal what audiences love, what they question and what is about to trend.',
-    useCases: ['Release and premiere buzz', 'Talent and franchise tracking', 'Audience feedback analysis'],
-  },
-  {
-    id: 'agencies',
-    icon: 'briefcase',
-    title: 'Agencies & consultancies',
-    summary: 'Deliver intelligence to multiple clients from one platform.',
-    challenge: 'Agencies manage many clients and need separate, secure spaces with reports that are easy to share.',
-    solution: 'Isolated workspaces, role-based access and scheduled reports make it simple to run monitoring for every client.',
-    useCases: ['Client reporting', 'Campaign performance insight', 'Pitch and market research'],
+    summary: 'Customer complaints on X, handled like a helpdesk.',
+    challenge: 'Customers tag your brand when something goes wrong. Many posts go unanswered.',
+    solution: 'The same ticketing for customer complaints, plus monitoring across ten sources.',
+    useCases: ['Customer complaints on X', 'Brand monitoring', 'Service-level reports'],
   },
 ];
 
+/** Why MyRadar 360. */
 export const WHY = [
-  { icon: 'languages', title: 'Built for India’s internet', text: 'Designed to understand Hindi, regional languages and code-mixed conversation — not just English.' },
-  { icon: 'eye', title: 'Transparent by design', text: 'Every alert and score shows the evidence behind it, so your team can trust and verify each insight.' },
-  { icon: 'lock', title: 'Secure and private', text: 'Isolated workspaces, role-based access and audit trails keep each team’s data protected.' },
-  { icon: 'handshake', title: 'Responsible data use', text: 'Only official APIs and licensed sources, in line with platform terms and data-protection laws.' },
+  { icon: 'languages', title: 'Speaks their language', text: 'Replies in the language the citizen wrote in. 13 languages supported.' },
+  { icon: 'shield-check', title: 'Follows X’s rules', text: 'Public replies only to people who tagged you. Everyone else by DM.' },
+  { icon: 'eye', title: 'Nothing slips through', text: 'One list, one owner, one clock for every complaint.' },
+  { icon: 'file-text', title: 'Proof you can share', text: 'Response times, reopens and ratings on every ticket.' },
 ];
 
 export const PILLARS = [
-  { icon: 'radar', title: 'Listen', text: 'Monitor public conversation across the sources that matter to you.' },
-  { icon: 'lightbulb', title: 'Understand', text: 'Turn thousands of mentions into a few clear, explainable insights.' },
-  { icon: 'zap', title: 'Act', text: 'Respond early, brief leadership and measure what changed.' },
+  { icon: 'inbox', title: 'Capture', text: 'Every complaint on X becomes a ticket.' },
+  { icon: 'reply', title: 'Respond', text: 'Acknowledge in seconds. Reply on X, in their language.' },
+  { icon: 'circle-check', title: 'Resolve', text: 'Close, collect a rating, prove the work.' },
 ];
 
 export const OBJECTIVES = [
-  { title: 'Centralise information', text: 'Bring scattered conversation from many platforms into one reliable place.' },
-  { title: 'Detect early', text: 'Highlight emerging issues and opportunities before they become headlines.' },
-  { title: 'Explain clearly', text: 'Present insights in plain language with the evidence behind them.' },
-  { title: 'Support decisions', text: 'Give leadership concise reports they can act on with confidence.' },
-  { title: 'Respect people and platforms', text: 'Use data responsibly, lawfully and through authorised channels.' },
+  { title: 'No complaint lost', text: 'Every mention and DM that needs action is logged.' },
+  { title: 'Every complaint owned', text: 'A named officer and a deadline for each one.' },
+  { title: 'Every citizen answered', text: 'A reply on X, in their own language.' },
+  { title: 'Every result shown', text: 'Response times and ratings, ready for reports.' },
+  { title: 'Done the right way', text: 'Within X’s rules, with costs kept under control.' },
 ];
 
 export const FAQ = [
-  { q: 'What sources does MyRadar 360 monitor?', a: 'Ten sources: six social platforms — X (Twitter), YouTube, Instagram, Facebook, Reddit and LinkedIn — and four media streams — online news, newspaper e-papers, television and news published on X by media houses. Public content is connected through official APIs and licensed data providers, and the sources for your workspace are agreed during setup.' },
-  { q: 'Does it understand Indian languages?', a: 'Yes. MyRadar 360 is designed for Hindi, regional languages and code-mixed text such as Hinglish. Sentiment results include a confidence score so teams can review edge cases.' },
-  { q: 'How quickly will we see insights?', a: 'Once your workspace is configured, new mentions appear continuously and alerts are sent as soon as your conditions are met.' },
-  { q: 'Can different teams have separate access?', a: 'Yes. Each project lives in its own workspace, and every member has a role that controls what they can view and change.' },
-  { q: 'How is pricing decided?', a: 'Pricing depends on the number of workspaces, sources and expected volume. Share a few details through the contact form and our team will prepare a proposal.' },
+  { q: 'Which messages become tickets?', a: 'Mentions that are complaints or queries, every DM to your handle, and feed posts your team chooses to raise. Greetings and praise are skipped.' },
+  { q: 'Which languages are supported?', a: '13, including Hindi, romanised Hindi, Marathi, Bengali, Tamil, Telugu and Urdu. Acknowledgements go out in the language the person wrote in.' },
+  { q: 'Who gets a public reply?', a: 'Only people who tagged your handle. Everyone else is contacted by DM, in line with X’s rules.' },
+  { q: 'Can one complaint create two tickets?', a: 'No. The same post never creates two tickets. And if the same person DMs again about a resolved issue, the old ticket reopens.' },
+  { q: 'What are the SLA targets?', a: 'By default, first response in 60 minutes and resolution in 48 hours. Every ticket shows the time left.' },
+  { q: 'How is cost kept under control?', a: 'Daily caps limit automatic replies and mention tickets.' },
+  { q: 'What can we report on?', a: 'Every ticket keeps first response time, resolution time, reopen count and citizen rating.' },
+  { q: 'Does it still monitor social media and news?', a: 'Yes. MyRadar 360 also follows ten sources — six social platforms, plus news, e-papers, TV and news on X — with sentiment and spike alerts.' },
 ];

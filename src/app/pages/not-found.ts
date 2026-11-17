@@ -13,7 +13,7 @@ import { SpotComponent } from '../shared/components/spot';
         <div class="art"><mr-spot icon="scan-search" /></div>
         <p class="eyebrow">Error 404</p>
         <h1>This page is off the radar.</h1>
-        <p class="lead">The link may be outdated or the page may have moved.</p>
+        <p class="lead">This link is old, or the page has moved.</p>
         <div class="actions"><a class="btn btn-primary" routerLink="/">Back to home</a><a class="btn btn-secondary" routerLink="/contact">Contact us</a></div>
       </div>
     </section>

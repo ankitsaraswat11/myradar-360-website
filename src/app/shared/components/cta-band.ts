@@ -32,7 +32,7 @@ import { RevealDirective } from '../directives/reveal.directive';
   styles: `
     .band { position: relative; overflow: hidden; isolation: isolate; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap;
       padding: clamp(36px, 5vw, 64px); border-radius: var(--radius-xl);
-      background: radial-gradient(60% 90% at 100% 50%, rgba(72, 224, 193, .18), transparent 60%), radial-gradient(40% 80% at 0% 100%, rgba(139, 124, 255, .2), transparent 60%), #070d17;
+      background: radial-gradient(60% 90% at 100% 50%, rgba(72, 224, 193, .18), transparent 60%), radial-gradient(40% 80% at 0% 100%, rgba(154, 82, 224, .2), transparent 60%), #070d17;
       border: 1px solid var(--border); box-shadow: var(--shadow-lg); }
     .grid { position: absolute; inset: 0; z-index: -2; mask-image: linear-gradient(90deg, transparent, #000); -webkit-mask-image: linear-gradient(90deg, transparent, #000); }
     .rings { position: absolute; z-index: -1; right: -110px; top: 50%; width: 440px; aspect-ratio: 1; transform: translateY(-50%); }
@@ -46,6 +46,6 @@ import { RevealDirective } from '../directives/reveal.directive';
   `,
 })
 export class CtaBandComponent {
-  readonly title = input('Bring every important conversation into view.');
-  readonly text = input('See how MyRadar 360 can work for your organisation with a short, personalised walkthrough.');
+  readonly title = input('Turn your X handle into a support desk.');
+  readonly text = input('Get a short, personal demo for your office.');
 }

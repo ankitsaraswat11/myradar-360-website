@@ -1,5 +1,7 @@
 # MyRadar 360 — Redesign guide (November 2026)
 
+> **Update (17 Nov 2026): Citizen Support on X.** The site now tells the story from the “Citizen Support on X: Ticketing Use Case” brief. Home: problem → how it works (`flow-diagram.ts`, from the brief’s flow chart) → the Ward 14 water complaint (`story-walkthrough.ts`, 7 steps, swipe/keys/autoplay) → what the team gets (6 features, `insight-panel.ts`) → guardrails → who it’s for → monitoring (supporting) → get started → contact. New hero visual: `ticket-hero.ts`. New logo assets in `public/brand/`. Content: `content.ts` (`PROBLEMS`, `ENTRY_POINTS`, `LANGUAGES`, `TOPICS`, `SLA`, `STORY`, `FEATURES`, `GUARDRAILS`, `INDUSTRIES` as public-sector teams). Figures used are only those in the brief (3 entry points, 13 languages, 60 min / 48 h SLA defaults, 5 named topics + 9 more).
+
 A presentation-layer redesign. Routes, page copy (`content/content.ts`), the contact form and `ContactService`, `SeoService`, `site.config.ts`, icons and all dependencies are unchanged. No packages were added.
 
 Interaction quality and motion language were modelled on the Inbox Media reference source (token-driven theming, a pre-paint theme script, IntersectionObserver reveals, a pointer-drag carousel, flowing SVG beams around a hub). Its code, colours, copy and branding were **not** reused. Every visual here is original to MyRadar 360.

@@ -39,8 +39,9 @@
   --dur-slow: 0.9s;
 
   // brand constants (decorative strokes / fills — never used for body text)
-  --mint: #48e0c1;
-  --violet: #8b7cff;
+  --mint: #3fdc9f;
+  --violet: #9a52e0;
+  --blue: #3f7fd0;
 }
 
 // ---- LIGHT: cool paper canvas, deep ink, mint/violet accents ----
@@ -60,8 +61,8 @@
   --accent: #2fcfaf;      // decorative mint
   --accent-ink: #04705e;  // text-safe mint (6.1:1 on white)
   --accent-soft: rgba(47, 207, 175, 0.12);
-  --violet-ink: #5543d6;  // text-safe violet
-  --violet-soft: rgba(110, 92, 240, 0.1);
+  --violet-ink: #6a2eb5;  // text-safe violet (logo purple)
+  --violet-soft: rgba(138, 53, 196, 0.1);
   --btn-bg: linear-gradient(135deg, #0d1a2b, #1b3150);
   --btn-bg-hover: linear-gradient(135deg, #142640, #24406a);
   --btn-fg: #ffffff;
@@ -70,7 +71,7 @@
   --pos: #0d7448; --neu: #6c7c92; --neg: #b3243a;
   --grid-line: rgba(13, 26, 43, 0.06);
   --glow-1: rgba(47, 207, 175, 0.2);
-  --glow-2: rgba(110, 92, 240, 0.13);
+  --glow-2: rgba(138, 53, 196, 0.12);
   --shadow-sm: 0 1px 2px rgba(13, 26, 43, 0.05);
   --shadow: 0 1px 2px rgba(13, 26, 43, 0.04), 0 14px 36px -18px rgba(13, 26, 43, 0.22);
   --shadow-lg: 0 2px 6px rgba(13, 26, 43, 0.05), 0 34px 70px -30px rgba(13, 26, 43, 0.32);
@@ -96,8 +97,8 @@
   --accent: #48e0c1;
   --accent-ink: #74ead2;
   --accent-soft: rgba(72, 224, 193, 0.11);
-  --violet-ink: #aea3ff;
-  --violet-soft: rgba(139, 124, 255, 0.13);
+  --violet-ink: #c9a2ff;
+  --violet-soft: rgba(168, 102, 240, 0.14);
   --btn-bg: linear-gradient(135deg, #7af0d7, #3fd6b8);
   --btn-bg-hover: linear-gradient(135deg, #a3f6e5, #56e2c6);
   --btn-fg: #04201b;
@@ -106,7 +107,7 @@
   --pos: #4ad99a; --neu: #8d9eb1; --neg: #ff7d8b;
   --grid-line: rgba(255, 255, 255, 0.05);
   --glow-1: rgba(72, 224, 193, 0.16);
-  --glow-2: rgba(139, 124, 255, 0.16);
+  --glow-2: rgba(154, 82, 224, 0.17);
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px -20px rgba(0, 0, 0, 0.7);
   --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.45), 0 36px 80px -30px rgba(0, 0, 0, 0.85);
@@ -131,7 +132,7 @@
   --accent: #48e0c1;
   --accent-ink: #74ead2;
   --accent-soft: rgba(72, 224, 193, 0.11);
-  --violet-ink: #aea3ff;
+  --violet-ink: #c9a2ff;
   --btn-bg: linear-gradient(135deg, #7af0d7, #3fd6b8);
   --btn-bg-hover: linear-gradient(135deg, #a3f6e5, #56e2c6);
   --btn-fg: #04201b;

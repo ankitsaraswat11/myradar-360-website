@@ -23,15 +23,17 @@ import { SITE } from '../core/site.config';
         <div class="top">
           <div class="about">
             <mr-logo />
-            <p>A social and media intelligence platform for teams that need to know what is being said — and what to do about it.</p>
+            <p>Every complaint on X becomes a ticket — with an owner, a deadline and a reply.</p>
             <a class="mail" [href]="'mailto:' + site.contact.email"><mr-icon name="mail" [size]="18" />{{ site.contact.email }}</a>
+            <address><mr-icon name="map-pin" [size]="18" /><span>@for (l of site.contact.addressLines; track l; let last = $last) { {{ l }}@if (!last) {, } }</span></address>
+            <p class="by">A product of <a [href]="site.company.url" target="_blank" rel="noopener">{{ site.company.name }}<span class="sr-only"> (opens in a new tab)</span></a></p>
           </div>
           <nav aria-label="Product">
             <h2>Product</h2>
             @for (f of features; track f.id) { <a routerLink="/features" [fragment]="f.id">{{ f.title }}</a> }
           </nav>
           <nav aria-label="Industries">
-            <h2>Industries</h2>
+            <h2>Who it’s for</h2>
             @for (i of industries; track i.id) { <a routerLink="/industries" [fragment]="i.id">{{ i.title }}</a> }
           </nav>
           <nav aria-label="Company">
@@ -43,8 +45,9 @@ import { SITE } from '../core/site.config';
           </nav>
         </div>
         <div class="bottom">
-          <p>© {{ site.year }} {{ site.name }}. All rights reserved.</p>
-          <p class="badges"><span>Public data only</span><span>Official APIs</span><span>Role-based access</span></p>
+          <p>© {{ site.year }} {{ site.name }} · {{ site.company.name }} All rights reserved.</p>
+          <p class="social">@for (x of site.social; track x.label) { <a [href]="x.url" target="_blank" rel="noopener">{{ x.label }}<span class="sr-only"> (opens in a new tab)</span></a> }</p>
+          <p class="badges"><span>Follows X’s rules</span><span>13 languages</span><span>SLA on every ticket</span></p>
         </div>
       </div>
     </footer>
@@ -67,6 +70,11 @@ import { SITE } from '../core/site.config';
     nav a:hover { color: var(--fg); transform: translateX(3px); }
     .bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-top: 24px; }
     .bottom p { color: var(--fg-3); font-size: .86rem; }
+    address { display: flex; gap: 8px; align-items: flex-start; font-style: normal; color: var(--fg-2); font-size: .92rem; line-height: 1.55; }
+    address mr-icon { color: var(--accent-ink); margin-top: 2px; }
+    .by { font-size: .88rem; } .by a { font-weight: 700; }
+    .social { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+    .social a { color: var(--fg-2); font-weight: 650; } .social a:hover { color: var(--fg); }
     .badges { display: flex; flex-wrap: wrap; gap: 8px; }
     .badges span { padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; }
     @media (max-width: 1023px) { .top { grid-template-columns: 1fr 1fr; } .about { grid-column: 1 / -1; max-width: none; } }

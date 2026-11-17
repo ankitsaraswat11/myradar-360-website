@@ -37,8 +37,8 @@ const SHORT: Record<string, string> = { 'X (Twitter)': 'X', 'News (web)': 'News'
           <defs>
             <radialGradient id="hvGlow" cx="50%" cy="50%" r="50%">
               <stop offset="0%" stop-color="#48e0c1" stop-opacity=".22" />
-              <stop offset="55%" stop-color="#8b7cff" stop-opacity=".07" />
-              <stop offset="100%" stop-color="#8b7cff" stop-opacity="0" />
+              <stop offset="55%" stop-color="#9a52e0" stop-opacity=".07" />
+              <stop offset="100%" stop-color="#9a52e0" stop-opacity="0" />
             </radialGradient>
           </defs>
           <circle cx="300" cy="300" r="296" fill="url(#hvGlow)" />
@@ -50,12 +50,12 @@ const SHORT: Record<string, string> = { 'X (Twitter)': 'X', 'News (web)': 'News'
         <span class="sweep"></span>
         <svg class="orbit o1" viewBox="0 0 600 600"><circle cx="300" cy="300" r="270" class="dash" /><circle cx="570" cy="300" r="4" class="od a" /><circle cx="30" cy="300" r="3" class="od v" /></svg>
         <svg class="orbit o2" viewBox="0 0 600 600">
-          <defs><linearGradient id="hvArc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#48e0c1" /><stop offset="1" stop-color="#8b7cff" /></linearGradient></defs>
+          <defs><linearGradient id="hvArc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#48e0c1" /><stop offset="1" stop-color="#9a52e0" /></linearGradient></defs>
           <circle cx="300" cy="300" r="196" fill="none" stroke="url(#hvArc)" stroke-width="2" stroke-linecap="round" stroke-dasharray="70 1162" />
           <circle cx="300" cy="104" r="3.5" class="od v" />
         </svg>
         <svg class="beams" viewBox="0 0 600 600">
-          <defs><linearGradient id="hvBeam" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#48e0c1" /><stop offset="1" stop-color="#8b7cff" /></linearGradient></defs>
+          <defs><linearGradient id="hvBeam" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#48e0c1" /><stop offset="1" stop-color="#9a52e0" /></linearGradient></defs>
           @for (n of nodes; track n.label; let i = $index) {
             <g [class.on]="active() === i">
               <path [attr.d]="n.path" class="b-base" />
@@ -68,7 +68,7 @@ const SHORT: Record<string, string> = { 'X (Twitter)': 'X', 'News (web)': 'News'
         <div class="core">
           <span class="pulse"></span><span class="pulse p2"></span>
           <span class="tile">
-            <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="12.5" fill="none" stroke="#7af0d7" stroke-width="2" stroke-dasharray="58 8.5" transform="rotate(-62 20 20)" /><circle cx="20" cy="20" r="7" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="2" /><path d="M20 20 L29.2 10.8" stroke="#7af0d7" stroke-width="2.2" stroke-linecap="round" /><circle cx="20" cy="20" r="2.6" fill="#fff" /><circle cx="29.2" cy="10.8" r="2.4" fill="#8b7cff" /></svg>
+            <img src="/brand/logo-mark.png" alt="" width="72" height="72" />
           </span>
           <span class="core-label">One clear view</span>
         </div>
@@ -112,7 +112,7 @@ const SHORT: Record<string, string> = { 'X (Twitter)': 'X', 'News (web)': 'News'
     .o1 { animation: mr-spin 70s linear infinite; }
     .o2 { animation: mr-spin 26s linear infinite reverse; }
     .dash { fill: none; stroke: var(--border-strong); stroke-width: 1.5; stroke-dasharray: 2 10; stroke-linecap: round; }
-    .od.a { fill: #48e0c1; } .od.v { fill: #8b7cff; }
+    .od.a { fill: #48e0c1; } .od.v { fill: #9a52e0; }
     .b-base { fill: none; stroke: var(--fg); stroke-opacity: .1; stroke-width: 1.4; transition: stroke-opacity .4s; }
     .b-flow { fill: none; stroke: url(#hvBeam); stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 9 91; stroke-dashoffset: 100; opacity: .75; animation: flow 2.8s linear infinite; }
     .b2 { stroke-width: 1.6; opacity: .45; }
@@ -124,7 +124,7 @@ const SHORT: Record<string, string> = { 'X (Twitter)': 'X', 'News (web)': 'News'
     .tile { position: relative; z-index: 2; width: 100%; height: 100%; border-radius: 30%; display: grid; place-items: center;
       background: linear-gradient(145deg, #15283f, #08111d); border: 1px solid rgba(116, 234, 210, .3);
       box-shadow: 0 24px 50px -16px rgba(5, 12, 22, .6), 0 0 40px -6px rgba(72, 224, 193, .45), inset 0 1px rgba(255, 255, 255, .15); }
-    .tile svg { width: 56%; height: 56%; }
+    .tile img { width: 64%; height: 64%; object-fit: contain; }
     .pulse { position: absolute; inset: 0; border-radius: 30%; border: 1.5px solid var(--accent); animation: ripple 3.2s var(--ease-out) infinite; }
     .p2 { animation-delay: 1.6s; }
     @keyframes ripple { from { transform: scale(1); opacity: .7; } to { transform: scale(1.9); opacity: 0; } }

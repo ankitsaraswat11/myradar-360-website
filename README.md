@@ -58,11 +58,11 @@ To change wording, edit `src/app/content/content.ts` — pages render from it.
 
 ## Design
 
-- **Identity:** original logo — a “360” orbit ring around a focal point with one bearing line (monitoring, visibility, a central view).
-- **Colours:** midnight / cool-paper surfaces with radar mint and electric violet accents, defined once as CSS tokens for each theme.
-- **Type:** Manrope for display and text, Newsreader italic for accent words (self-hosted via `@fontsource`, no external requests).
-- **Visuals:** hand-built SVG/CSS — sources flowing into one radar view, product panels for each feature (labelled *Sample data*), a scroll-driven “How it works” timeline and a swipeable industry carousel. No stock images.
-- See `REDESIGN-GUIDE.md` for the full design system, motion, swipe behaviour and verification notes.
+- **Story:** Citizen Support on X. Citizens tag a government office or send it a DM; MyRadar 360 turns each message into a ticket with an owner, a deadline and a reply on X. Monitoring across ten sources is the supporting capability.
+- **Logo:** `public/brand/logo-mark.png` (target mark) and `public/brand/logo-full.png` (full logo). The header wordmark “MY RADAR 360®” is set in text so it stays sharp in light and dark themes. Favicons: `public/favicon.png`, `public/apple-touch-icon.png`, `public/brand/icon-*.png`. Social preview: `public/og-image.png`.
+- **Colours:** taken from the logo — green/teal → blue → purple — as CSS tokens in `src/styles.scss` for both themes.
+- **Visuals:** hand-built HTML/SVG — the hero ticket flow, the animated “how it works” diagram, the 7-step water-complaint walkthrough and the six product panels. All tickets, handles and figures in them are labelled *Sample*.
+- Copy lives in `src/app/content/content.ts`. See `REDESIGN-GUIDE.md` for the design system and interactions.
 
 ## Quality notes
 

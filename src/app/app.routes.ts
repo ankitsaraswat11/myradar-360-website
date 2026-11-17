@@ -5,22 +5,22 @@ export const routes: Routes = [
   {
     path: '',
     component: HomePage,
-    data: { seo: { title: 'MyRadar 360', description: 'MyRadar 360 brings news, social platforms and online conversation into one clear view — with sentiment, trends and real-time alerts for your team.' } },
+    data: { seo: { title: 'MyRadar 360', description: 'MyRadar 360 turns citizen complaints on X into tickets — with an owner, a deadline and a reply on X in the citizen’s language. Mentions, DMs and feed posts in one list.' } },
   },
   {
     path: 'about',
     loadComponent: () => import('./pages/about').then((m) => m.AboutPage),
-    data: { seo: { title: 'About', description: 'Learn why MyRadar 360 was built, its vision and mission, and the objectives behind the platform.' } },
+    data: { seo: { title: 'About', description: 'Why MyRadar 360 exists: so no citizen complaint on X goes untracked, unowned or unanswered.' } },
   },
   {
     path: 'features',
     loadComponent: () => import('./pages/features').then((m) => m.FeaturesPage),
-    data: { seo: { title: 'Features', description: 'Unified monitoring, Indian-language sentiment, trend detection, competitor benchmarking, real-time alerts and executive reports.' } },
+    data: { seo: { title: 'Features', description: 'One ticket list, conversations on X, saved replies, auto topics, SLA tracking and citizen ratings — plus monitoring across ten sources.' } },
   },
   {
     path: 'industries',
     loadComponent: () => import('./pages/industries').then((m) => m.IndustriesPage),
-    data: { seo: { title: 'Industries', description: 'How brands, PR teams, financial services, public institutions, media and agencies use MyRadar 360.' } },
+    data: { seo: { title: 'Who it’s for', description: 'How district offices, municipal corporations, police, utilities, health departments and brands handle complaints on X with MyRadar 360.' } },
   },
   {
     path: 'contact',

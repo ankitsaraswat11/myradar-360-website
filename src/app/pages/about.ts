@@ -3,35 +3,33 @@ import { IconComponent } from '../shared/components/icon';
 import { PageHeroComponent } from '../shared/components/page-hero';
 import { SectionHeaderComponent } from '../shared/components/section-header';
 import { CtaBandComponent } from '../shared/components/cta-band';
-import { HeroVisualComponent } from '../shared/components/hero-visual';
 import { RevealDirective } from '../shared/directives/reveal.directive';
 import { OBJECTIVES, PILLARS } from '../content/content';
+import { SITE } from '../core/site.config';
 
 @Component({
   selector: 'mr-about',
-  imports: [IconComponent, PageHeroComponent, SectionHeaderComponent, CtaBandComponent, HeroVisualComponent, RevealDirective],
+  imports: [IconComponent, PageHeroComponent, SectionHeaderComponent, CtaBandComponent, RevealDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <mr-page-hero eyebrow="About MyRadar 360" intro="A social and media intelligence platform built to give organisations a complete, honest and timely picture of the conversation around them.">
-      Turning online conversation into <span class="serif">clear direction.</span>
+    <mr-page-hero eyebrow="About MyRadar 360" intro="So no citizen complaint on X goes untracked, unowned or unanswered.">
+      Every voice on X <span class="serif">deserves a reply.</span>
     </mr-page-hero>
 
     <section class="section" aria-labelledby="intro-title">
       <div class="container grid-2">
         <div class="copy" mrReveal>
-          <p class="eyebrow">The project</p>
-          <h2 id="intro-title">Why we built MyRadar 360</h2>
+          <p class="eyebrow">Why we built it</p>
+          <h2 id="intro-title">Complaints moved to X. Support didn’t.</h2>
           <p>
-            Every day, thousands of posts, articles, videos and comments shape how people see a brand, a service or a public programme.
-            For most teams this conversation is scattered across many platforms, written in many languages and moving faster than anyone can read.
+            Citizens now raise complaints on X — they tag a government office’s handle or send it a DM. Most of these are never tracked. Nobody owns them, the citizen gets no reply, and the office cannot show what it handled.
           </p>
           <p>
-            MyRadar 360 brings that conversation into one place. It listens across sources, understands tone and topics with AI — including Hindi
-            and code-mixed language — and highlights what genuinely needs attention. The name reflects the goal: a complete, 360-degree view,
-            with the clarity of a radar that shows what is approaching before it arrives.
+            MyRadar 360 turns every such message into a ticket with an owner, a deadline and a reply sent back on X — in the citizen’s own language. And it keeps a radar on the wider conversation, across ten sources, so nothing important arrives as a surprise.
           </p>
+          <p class="by">MyRadar 360 is built by <a [href]="site.company.url" target="_blank" rel="noopener">{{ site.company.name }}<span class="sr-only"> (opens in a new tab)</span></a>, Noida — serving enterprises since {{ site.company.since }}.</p>
         </div>
-        <div class="viz" mrReveal="120"><mr-hero-visual /></div>
+        <div class="viz" mrReveal="120"><div class="brand"><img src="/brand/logo-full.png" alt="MyRadar 360 logo" width="414" height="403" /></div></div>
       </div>
     </section>
 
@@ -42,12 +40,12 @@ import { OBJECTIVES, PILLARS } from '../content/content';
           <article class="card vm-card" mrReveal>
             <span class="icon-tile"><mr-icon name="compass" [size]="22" /></span>
             <h3>Our vision</h3>
-            <p>A world where every organisation can understand the public conversation around it clearly and fairly — and respond with facts rather than guesswork.</p>
+            <p>Every citizen who reaches out on X gets heard, helped and answered.</p>
           </article>
           <article class="card vm-card" mrReveal="100">
             <span class="icon-tile"><mr-icon name="target" [size]="22" /></span>
             <h3>Our mission</h3>
-            <p>To make social and media intelligence simple, transparent and accessible — combining reliable data, local-language AI and thoughtful design so teams can act in time.</p>
+            <p>Give every public office a simple way to track, answer and close complaints on X — and prove it.</p>
           </article>
         </div>
       </div>
@@ -55,7 +53,7 @@ import { OBJECTIVES, PILLARS } from '../content/content';
 
     <section class="section" aria-labelledby="obj-title">
       <div class="container">
-        <mr-section-header eyebrow="Product objectives" intro="Five commitments shape every feature we build."><span id="obj-title">What MyRadar 360 sets out to do</span></mr-section-header>
+        <mr-section-header eyebrow="Product objectives" intro="Five promises behind every ticket."><span id="obj-title">What we set out to do</span></mr-section-header>
         <ol class="objectives">
           @for (o of objectives; track o.title; let i = $index) {
             <li [mrReveal]="i * 70">
@@ -69,7 +67,7 @@ import { OBJECTIVES, PILLARS } from '../content/content';
 
     <section class="section soft" aria-labelledby="approach-title">
       <div class="container">
-        <mr-section-header eyebrow="Our approach" align="center"><span id="approach-title">Listen. Understand. Act.</span></mr-section-header>
+        <mr-section-header eyebrow="Our approach" align="center"><span id="approach-title">Capture. Respond. Resolve.</span></mr-section-header>
         <div class="grid-3">
           @for (p of pillars; track p.title; let i = $index) {
             <article class="card hover" [mrReveal]="i * 90">
@@ -87,7 +85,11 @@ import { OBJECTIVES, PILLARS } from '../content/content';
   styles: `
     :host > .section:first-of-type { overflow-x: clip; }
     .copy { display: grid; gap: 18px; justify-items: start; }
-    .viz { width: min(100%, 520px); margin-inline: auto; }
+    .by { padding-left: 14px; border-left: 3px solid var(--accent); color: var(--fg); }
+    .by a { font-weight: 700; }
+    .viz { width: min(100%, 460px); margin-inline: auto; }
+    .brand { display: grid; place-items: center; aspect-ratio: 1; padding: 12%; border-radius: 40px; background: radial-gradient(70% 70% at 30% 20%, var(--accent-soft), transparent 70%), radial-gradient(70% 70% at 80% 90%, var(--violet-soft), transparent 70%), #fff; border: 1px solid var(--border); box-shadow: var(--shadow-lg); }
+    .brand img { width: 100%; height: auto; }
     .vm { align-items: stretch; }
     .vm-card { display: grid; gap: 14px; align-content: start; padding: clamp(26px, 3vw, 40px); }
     .vm-card h3 { font-size: 1.5rem; }
@@ -107,4 +109,5 @@ import { OBJECTIVES, PILLARS } from '../content/content';
 export class AboutPage {
   readonly objectives = OBJECTIVES;
   readonly pillars = PILLARS;
+  readonly site = SITE;
 }
