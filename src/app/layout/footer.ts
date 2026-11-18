@@ -31,7 +31,7 @@ import { SITE } from '../core/site.config';
           <nav aria-label="Services">
             <h2>Services</h2>
             @for (s of services; track s.id) { <a routerLink="/features" [fragment]="s.id">{{ s.name }}</a> }
-            <a class="xm" routerLink="/engagement">Intelligent Engagement <span>Platform</span></a>
+            <a routerLink="/engagement">Engagement</a>
           </nav>
           <nav aria-label="Industries">
             <h2>Who it’s for</h2>
@@ -69,8 +69,6 @@ import { SITE } from '../core/site.config';
     h2 { color: var(--fg); font-size: .78rem; font-weight: 750; line-height: 1.3; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
     nav a { width: fit-content; padding: 5px 0; color: var(--fg-2); font-size: .94rem; transition: color .2s, transform .3s var(--ease); }
     nav a:hover { color: var(--fg); transform: translateX(3px); }
-    nav a.xm { display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; color: var(--fg); font-weight: 700; }
-    nav a.xm span { padding: 1px 8px; border-radius: 999px; font-size: .72rem; color: var(--violet-ink); background: var(--violet-soft); }
     .bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-top: 24px; }
     .bottom p { color: var(--fg-3); font-size: .86rem; }
     address { display: flex; gap: 8px; align-items: flex-start; font-style: normal; color: var(--fg-2); font-size: .92rem; line-height: 1.55; }

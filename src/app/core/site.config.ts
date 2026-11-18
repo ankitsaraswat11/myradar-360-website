@@ -12,7 +12,7 @@ export const SITE = {
   /** MyRadar 360 is a product of Inbox Media Pvt. Ltd. (details as on the Inbox Media website). */
   company: {
     name: 'Inbox Media Pvt. Ltd.',
-    url: 'https://inboxmediaweb.vercel.app/',
+    url: 'https://inboxmedia.in/',
     since: 2009,
   },
   contact: {
